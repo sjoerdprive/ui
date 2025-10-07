@@ -7,12 +7,14 @@ interface ButtonProps extends ComponentProps<"button">, ButtonStyles {}
 
 export const Button = forwardRef(
   (
-    { className, children, height, theme, ...buttonProps }: ButtonProps,
+    { className, children, height, theme, square, ...buttonProps }: ButtonProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
     return (
       <button
-        className={twMerge(buttonClassVariants({ theme, height, className }))}
+        className={twMerge(
+          buttonClassVariants({ theme, height, className, square })
+        )}
         {...buttonProps}
         ref={ref}
       >

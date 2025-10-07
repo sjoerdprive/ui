@@ -23,6 +23,7 @@ export const Input = forwardRef(
       theme,
       multiple,
       children,
+      square,
       ...inputProps
     }: GroupInputProps,
     ref: ForwardedRef<HTMLInputElement>
@@ -33,6 +34,7 @@ export const Input = forwardRef(
           buttonClassVariants({
             height,
             theme,
+            square,
             className: classnames(
               "flex items-center justify-center",
               className

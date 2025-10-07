@@ -2,6 +2,9 @@ import { Button } from "./button";
 import { Group } from "./button-group";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Input } from "./group-input";
+import type { ComponentProps } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 type Story = StoryObj<typeof Button>;
 
@@ -21,7 +24,9 @@ export const AsGroup: Story = {
   render: (args) => (
     <Group>
       <Button {...args}>Main action</Button>
-      <Button {...args}>v</Button>
+      <Button {...args} square>
+        <FontAwesomeIcon icon={faChevronDown} />
+      </Button>
     </Group>
   ),
 };
@@ -29,28 +34,13 @@ export const AsGroup: Story = {
 export const AsRadioGroup: Story = {
   render: (args) => (
     <Group>
-      <Input
-        name="radio"
-        height={args.height}
-        theme={args.theme}
-        multiple={false}
-      >
+      <Input name="radio" {...(args as ComponentProps<typeof Input>)}>
         Option 1
       </Input>
-      <Input
-        name="radio"
-        height={args.height}
-        theme={args.theme}
-        multiple={false}
-      >
+      <Input name="radio" {...(args as ComponentProps<typeof Input>)}>
         Option 2
       </Input>
-      <Input
-        name="radio"
-        height={args.height}
-        theme={args.theme}
-        multiple={false}
-      >
+      <Input name="radio" {...(args as ComponentProps<typeof Input>)}>
         Option 3
       </Input>
     </Group>

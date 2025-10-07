@@ -21,6 +21,9 @@ const meta = {
   args: {
     height: "md",
     disabled: false,
+    options: stringOptions,
+    className: "w-48",
+    placeholder: "Select an option",
   },
 } satisfies Meta<typeof Select>;
 
@@ -120,7 +123,7 @@ export const WithPlaceholder: Story = {
       values: {
         select1: "1",
         select2: "2",
-        select3: "3"
+        select3: "3",
       },
     });
 
