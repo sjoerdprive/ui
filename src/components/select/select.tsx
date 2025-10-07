@@ -13,7 +13,7 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
-import { twMerge } from "tw-merge";
+import { twMerge } from "tailwind-merge";
 import { useClickOutside } from "../../hooks/use-click-outside";
 import { useScroll } from "../../hooks/use-scroll";
 import { inputClassVariants } from "../input/class-variants";

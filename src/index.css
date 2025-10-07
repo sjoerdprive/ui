@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "@toolwind/anchors";
 @source inline("text-*");
 
 @theme {
@@ -13,15 +12,27 @@
   --color-primary-200: #a3e6ed;
   --color-primary-100: #e0f8fa;
 
-  --color-secondary-100: #ffedd5;
-  --color-secondary-200: #ffd6a5;
-  --color-secondary-300: #ffb86b;
-  --color-secondary-400: #ff9800;
-  --color-secondary-500: #ff8000;
-  --color-secondary-600: #ff6600;
-  --color-secondary-700: #ff4d00;
-  --color-secondary-800: #ff3300;
-  --color-secondary-900: #ff1a00;
+  --color-secondary-900: #6e1816;
+  --color-secondary-800: #99211f;
+  --color-secondary-700: #b82825;
+  --color-secondary-600: #c92c2a;
+  --color-secondary-500: #d63230;
+  --color-secondary-400: #e05a56;
+  --color-secondary-300: #ea8683;
+  --color-secondary-200: #f3b3b0;
+  --color-secondary-100: #fbe0de;
+
+  --color-accent-900: #7a4a1a;
+  --color-accent-800: #a05f22;
+  --color-accent-700: #c6742a;
+  --color-accent-600: #e08932;
+  --color-accent-500: #f39237;
+  --color-accent-400: #f6a95e;
+  --color-accent-300: #f9c085;
+  --color-accent-200: #fbd7ac;
+  --color-accent-100: #fdefd3;
+
+  --color-body-text: #2b303a;
 
   --color-input-disabled-text: #9ca3af;
   --color-input-disabled-bg: #f3f4f6;

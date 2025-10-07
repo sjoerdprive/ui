@@ -7,7 +7,7 @@ import {
 import type { ButtonStyles } from "./types";
 import { buttonClassVariants } from "./class-variants";
 import { classnames } from "../../utils";
-import { twMerge } from "tw-merge";
+import { twMerge } from "tailwind-merge";
 
 interface GroupInputProps
   extends Omit<ComponentProps<"input">, "height">,

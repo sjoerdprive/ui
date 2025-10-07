@@ -1,15 +1,21 @@
 import type { ComponentProps } from "react";
 import { classnames } from "../../utils";
+import { useIsMounted } from "../../hooks/use-is-mounted";
 
 export const Backdrop = ({
   className,
   children,
   ...divProps
 }: ComponentProps<"div">) => {
+  const isMounted = useIsMounted();
+
   return (
     <div
       className={classnames(
-        "bg-black/10 backdrop-blur-xs z-40 fixed inset-0",
+        "bg-transparent z-40 backdrop-blur-none fixed inset-0 transition-all",
+        {
+          "backdrop-blur-xs bg-black/10": isMounted,
+        },
         className
       )}
       {...divProps}

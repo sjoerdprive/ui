@@ -1,12 +1,16 @@
 import type { Preview } from "@storybook/react-vite";
 import "../src/index.css";
-import { heightOptions } from "../src/config";
+import { heightOptions, themeOptions } from "../src/config";
 
 const preview: Preview = {
   argTypes: {
     height: {
       control: { type: "inline-radio" },
       options: heightOptions,
+    },
+    theme: {
+      control: { type: "inline-radio" },
+      options: themeOptions,
     },
   },
   parameters: {

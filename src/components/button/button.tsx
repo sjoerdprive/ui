@@ -1,7 +1,7 @@
 import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import { buttonClassVariants } from "./class-variants";
 import type { ButtonStyles } from "./types";
-import { twMerge } from "tw-merge";
+import { twMerge } from "tailwind-merge";
 
 interface ButtonProps extends ComponentProps<"button">, ButtonStyles {}
 

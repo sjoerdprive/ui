@@ -13,6 +13,7 @@ const meta = {
   component: Button,
   args: {
     height: "md",
+    disabled: false,
     theme: "primary",
     children: "Button",
   },

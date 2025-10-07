@@ -5,6 +5,7 @@ import { Header } from "./header";
 import { Title } from "./title";
 import { Main } from "./main";
 import { Footer } from "./footer";
+import { Close } from "./close";
 import { Dialog as DialogComponent } from "./dialog";
 
 export const Dialog = Object.assign(DialogComponent, {
@@ -15,4 +16,5 @@ export const Dialog = Object.assign(DialogComponent, {
   Title,
   Main,
   Footer,
+  Close,
 });

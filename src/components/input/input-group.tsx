@@ -2,7 +2,7 @@ import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import { inputClassVariants } from "./class-variants";
 import type { InputStyles } from "./types";
 import { classnames } from "../../utils";
-import { twMerge } from "tw-merge";
+import { twMerge } from "tailwind-merge";
 
 interface InputGroupProps extends ComponentProps<"label">, InputStyles {}
 
