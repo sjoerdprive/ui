@@ -29,7 +29,9 @@ export const Button = forwardRef(
         {...buttonProps}
         ref={ref}
       >
-        {isPending && <Spinner height={height}></Spinner>}
+        {isPending && (
+          <Spinner className="[--theme-500:currentColor]" height={height}></Spinner>
+        )}
         {children}
       </button>
     );

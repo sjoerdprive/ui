@@ -1,7 +1,8 @@
 import { cva } from "class-variance-authority";
+import { themeVariants } from "../../class-variants/theme";
 
 export const spinnerClassVariants = cva(
-  "animate-spin rounded-full border-t-transparent aspect-square w-auto h-full absolute",
+  "animate-spin rounded-full border-t-transparent aspect-square w-auto h-full absolute border-(--theme-500)",
   {
     variants: {
       height: {
@@ -9,11 +10,7 @@ export const spinnerClassVariants = cva(
         md: "border-2",
         lg: "border-3",
       },
-      theme: {
-        primary: "border-primary-500",
-        secondary: "border-secondary-500",
-        accent: "border-accent-500",
-      },
+      theme: themeVariants,
     },
   }
 );
