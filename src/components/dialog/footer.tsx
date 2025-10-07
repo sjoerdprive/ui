@@ -9,7 +9,7 @@ export const Footer = ({
   return (
     <footer
       className={classnames(
-        "px-4 py-2 border-t border-gray-200 bg-gray-100 flex gap-2 justify-end",
+        "px-5 py-2 border-t border-gray-200 bg-gray-50 flex gap-2 justify-end",
         className
       )}
       {...footerProps}

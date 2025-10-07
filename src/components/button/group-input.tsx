@@ -46,7 +46,7 @@ export const Input = forwardRef(
         <input
           ref={ref}
           type={multiple ? "checkbox" : "radio"}
-          className="invisible"
+          className="hidden"
           {...inputProps}
         />
       </label>

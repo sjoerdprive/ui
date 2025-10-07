@@ -3,7 +3,7 @@ import { heightVariants } from "../../class-variants/height";
 import { classnames } from "../../utils";
 
 export const buttonClassVariants = cva(
-  "px-4 rounded-md not-disabled:cursor-pointer not-disabled:hover:bg-(--bg-btn-hover) has-disabled:!bg-(--color-input-disabled-bg) text-(--text-btn) bg-(--bg-btn) flex items-center [--bg-btn-hover:var(--color-gray-100)] active:bg-(--bg-btn-active) disabled:bg-(--color-input-disabled-bg) disabled:text-(--color-input-disabled-text) has-disabled:bg-(--color-input-disabled-bg) has-disabled:text-(--color-input-disabled-text) has-disabled:cursor-default has-checked:bg-(--bg-btn-active) outline-(--outline-btn)",
+  "rounded-md not-disabled:cursor-pointer not-disabled:hover:bg-(--bg-btn-hover) has-disabled:!bg-(--color-input-disabled-bg) text-(--text-btn) bg-(--bg-btn) flex items-center [--bg-btn-hover:var(--color-gray-100)] [--bg-btn:white] active:bg-(--bg-btn-active) disabled:bg-(--color-input-disabled-bg) disabled:text-(--color-input-disabled-text) has-disabled:text-(--color-input-disabled-text) has-disabled:cursor-default has-checked:bg-(--bg-btn-active) outline-(--outline-btn)",
   {
     variants: {
       theme: {
@@ -16,7 +16,9 @@ export const buttonClassVariants = cva(
       },
       height: {
         ...heightVariants,
-        sm: classnames(heightVariants.sm, "text-sm"),
+        sm: classnames(heightVariants.sm, "text-sm px-2 gap-2"),
+        md: classnames(heightVariants.md, "px-3 gap-3"),
+        lg: classnames(heightVariants.lg, "px-4 gap-4"),
       },
       square: {
         true: "aspect-square p-0 w-auto overflow-hidden justify-center",

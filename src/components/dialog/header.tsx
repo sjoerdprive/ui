@@ -8,7 +8,7 @@ export const Header = ({
 }: ComponentProps<"header">) => {
   return (
     <header
-      className={classnames("px-4 py-3 flex gap-2 items-center", className)}
+      className={classnames("px-5 py-4 flex gap-2 items-center", className)}
       {...headerProps}
     >
       {children}

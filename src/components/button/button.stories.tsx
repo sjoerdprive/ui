@@ -48,4 +48,11 @@ export const AsRadioGroup: Story = {
   ),
 };
 
+export const Pending: Story = {
+  args: {
+    isPending: true,
+    children: "Loading...",
+  },
+};
+
 export default meta;
