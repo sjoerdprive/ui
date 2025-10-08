@@ -3,8 +3,13 @@ import { Select } from "./select";
 import { useForm } from "react-hook-form";
 import { Button } from "../button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import {
+  faQuestion,
+  faQuestionCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { Placeholder } from "./placeholder";
+import { useRef } from "react";
+import { Tooltip } from "../tooltip";
 
 const stringOptions = ["Option 1", "Option 2", "Option 3"];
 const complexOptions = [
@@ -119,6 +124,7 @@ export const ComplexOptions: Story = {
 
 export const WithPlaceholder: Story = {
   render: (args) => {
+    const tooltipRef = useRef(null);
     const { register, watch, reset } = useForm({
       values: {
         select1: "1",
@@ -157,9 +163,18 @@ export const WithPlaceholder: Story = {
           disabled={args.disabled}
           options={stringOptions}
           placeholder={
-            <Placeholder>
-              <FontAwesomeIcon icon={faQuestion} className="text-sm" /> Custom
-              placeholder using Select.Placeholder component
+            <Placeholder className="flex gap-2 items-baseline">
+              Custom Select.Placeholder
+              <FontAwesomeIcon
+                ref={tooltipRef}
+                icon={faQuestionCircle}
+                className="text-sm"
+              />{" "}
+              <Tooltip anchor={tooltipRef}>
+                <Tooltip.Content>
+                  This is a tooltip on the placeholder icon.
+                </Tooltip.Content>
+              </Tooltip>
             </Placeholder>
           }
           value={watch("select3")}

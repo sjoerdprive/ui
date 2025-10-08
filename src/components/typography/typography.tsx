@@ -1,5 +1,5 @@
 import { createElement, type ComponentProps } from "react";
-import type { TypographyOption } from "./types";
+import { typographyOptions, type TypographyOption } from "./types";
 import { typographyClassVariants } from "./class-variants";
 
 interface TypographyProps extends Omit<ComponentProps<"p">, "as"> {
@@ -15,7 +15,7 @@ export const Typography = ({
   ...pProps
 }: TypographyProps) => {
   return createElement(
-    as,
+    typographyOptions.find((t) => t === as) ?? "p",
     {
       className: typographyClassVariants({ size: size || as, className }),
       ...pProps,

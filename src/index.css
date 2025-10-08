@@ -37,12 +37,12 @@
   --color-input-disabled-text: #9ca3af;
   --color-input-disabled-bg: #f3f4f6;
 
-  --typography-h1-size: 3rem;
+  --typography-h1-size: 2.5rem;
   --typography-h2-size: 2rem;
-  --typography-h3-size: 1.75rem;
-  --typography-h4-size: 1.5rem;
-  --typography-h5-size: 1.25rem;
-  --typography-h6-size: 1.15rem;
+  --typography-h3-size: 1.5rem;
+  --typography-h4-size: 1.2rem;
+  --typography-h5-size: 1.1rem;
+  --typography-h6-size: 1.05rem;
 
   /* --typography-heading-family: "serif"; */
 }
