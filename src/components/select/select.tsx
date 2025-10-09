@@ -3,29 +3,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   forwardRef,
   useCallback,
-  useEffect,
   useId,
   useMemo,
   useRef,
   useState,
-  useTransition,
   type ChangeEvent,
-  type ForwardedRef,
+  type ForwardedRef
 } from "react";
 import { twMerge } from "tailwind-merge";
 import { useClickOutside } from "../../hooks/use-click-outside";
+import { useKey } from "../../hooks/use-key";
 import { useScroll } from "../../hooks/use-scroll";
 import { classnames } from "../../utils";
 import { Input } from "../input";
 import { inputClassVariants } from "../input/class-variants";
+import { Spinner } from "../spinner";
+import { Dropdown } from "./dropdown";
+import { useListbox } from "./hooks/use-listbox";
 import { useSelect } from "./hooks/use-select";
 import { Listbox } from "./listbox";
 import { Option } from "./option";
 import type { SelectExtraProps } from "./types";
-import { Dropdown } from "./dropdown";
-import { useKey } from "../../hooks/use-key";
-import { useListbox } from "./hooks/use-listbox";
-import { Spinner } from "../spinner";
 
 const SelectComponent = <T,>(
   {

@@ -21,7 +21,7 @@ export const Option = forwardRef(
       <label
         role="option"
         className={classnames(
-          "text-left px-3 py-2 hover:bg-gray-100 has-checked:bg-primary-50 has-checked:hover:bg-primary-100  ",
+          "text-left px-3 py-2 hover:bg-gray-100 has-checked:bg-primary-50 has-checked:hover:bg-primary-100 focus-within:bg-primary-50",
           {
             "bg-gray-100 has-checked:bg-primary-100": hasFocus,
           },
@@ -29,7 +29,7 @@ export const Option = forwardRef(
         )}
       >
         <input
-          className="hidden"
+          className="sr-only"
           ref={ref}
           type={multiple ? "checkbox" : "radio"}
           {...inputProps}
