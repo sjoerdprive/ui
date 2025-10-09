@@ -1,6 +1,6 @@
 import type { RefObject } from "react";
 
-export interface PopperProps<T extends HTMLElement | null> {
+export interface PopperProps<T = HTMLElement | null> {
   anchor?: RefObject<T>;
   isVisible?: boolean;
 }

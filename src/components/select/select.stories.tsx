@@ -10,6 +10,7 @@ import {
 import { Placeholder } from "./placeholder";
 import { useRef } from "react";
 import { Tooltip } from "../tooltip";
+import { Typography } from "../typography";
 
 const stringOptions = ["Option 1", "Option 2", "Option 3"];
 const complexOptions = [
@@ -39,7 +40,7 @@ export const SimpleOptions: Story = {
     const { register, watch, reset } = useForm({
       values: {
         select1: "1",
-        select2: "2",
+        select2: ["2"],
       },
     });
 
@@ -57,6 +58,7 @@ export const SimpleOptions: Story = {
           height={args.height}
           disabled={args.disabled}
           value={watch("select2")}
+          multiple
           {...register("select2")}
         />
 
@@ -99,6 +101,7 @@ export const ComplexOptions: Story = {
           disabled={args.disabled}
           options={complexOptions}
           identifier={(option) => option.id}
+          renderOption={(value) => <Typography>{value.label}</Typography>}
           multiple
           value={watch("complexSelect2")}
           {...register("complexSelect2")}
@@ -127,14 +130,17 @@ export const WithPlaceholder: Story = {
     const tooltipRef = useRef(null);
     const { register, watch, reset } = useForm({
       values: {
-        select1: "1",
-        select2: "2",
-        select3: "3",
+        select1: null,
+        select2: [],
+        select3: null,
+        select4: null,
+        select5: [],
       },
     });
 
     return (
       <div className="flex flex-col gap-4 max-w-100">
+        <pre>{JSON.stringify(watch(), null, 2)}</pre>
         <Select
           height={args.height}
           disabled={args.disabled}
@@ -154,6 +160,7 @@ export const WithPlaceholder: Story = {
               placeholder
             </span>
           }
+          multiple
           value={watch("select2")}
           {...register("select2")}
         />
@@ -179,6 +186,37 @@ export const WithPlaceholder: Story = {
           }
           value={watch("select3")}
           {...register("select3")}
+        />
+
+        <Select
+          height={args.height}
+          disabled={args.disabled}
+          options={complexOptions}
+          identifier={(option) => option.id}
+          renderOption={(option) => option.label}
+          placeholder={
+            <Placeholder className="flex gap-2 items-baseline">
+              Custom Select.Placeholder
+            </Placeholder>
+          }
+          value={watch("select4")}
+          {...register("select4")}
+        />
+
+        <Select
+          height={args.height}
+          disabled={args.disabled}
+          options={complexOptions}
+          identifier={(option) => option.id}
+          renderOption={(option) => option.label}
+          placeholder={
+            <Placeholder className="flex gap-2 items-baseline">
+              Custom Select.Placeholder
+            </Placeholder>
+          }
+          multiple
+          value={watch("select5")}
+          {...register("select5")}
         />
 
         <Button theme="primary" onClick={() => reset()}>
