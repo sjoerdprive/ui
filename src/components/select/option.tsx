@@ -3,18 +3,28 @@ import { classnames } from "../../utils";
 
 interface OptionComponentProps extends ComponentProps<"input"> {
   children?: React.ReactNode;
+  hasFocus?: boolean;
 }
 
 export const Option = forwardRef(
   (
-    { multiple, children, className, ...inputProps }: OptionComponentProps,
+    {
+      multiple,
+      children,
+      className,
+      hasFocus,
+      ...inputProps
+    }: OptionComponentProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     return (
       <label
         role="option"
         className={classnames(
-          "text-left px-3 py-1 hover:bg-gray-200 has-checked:bg-primary-100",
+          "text-left px-3 py-2 hover:bg-gray-100 has-checked:bg-primary-50 has-checked:hover:bg-primary-100  ",
+          {
+            "bg-gray-100 has-checked:bg-primary-100": hasFocus,
+          },
           className
         )}
       >

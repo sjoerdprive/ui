@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Placeholder } from "../placeholder";
 
 interface UseSelectParameters<T> {
@@ -25,12 +25,10 @@ export const useSelect = <T,>({
     [identifier]
   );
 
-  const optionsMap = useMemo(
-    () =>
-      new Map<string | number, T>(
-        options.map((option) => [getId(option), option])
-      ),
-    [options, getId]
+  const [optionsCache, setOptionsCache] = useState(
+    new Map<string | number, T>(
+      options.map((option) => [getId(option), option])
+    )
   );
 
   const isSelected = useCallback(
@@ -48,11 +46,11 @@ export const useSelect = <T,>({
     }
 
     if (Array.isArray(value)) {
-      return value.map((val) => optionsMap.get(val)) as T[];
+      return value.map((val) => optionsCache.get(val)) as T[];
     }
 
-    return optionsMap.get(value) as T;
-  }, [optionsMap, value]);
+    return optionsCache.get(value) as T;
+  }, [optionsCache, value]);
 
   const renderOptionContent = useCallback(
     (option: T) => (renderOption ? renderOption(option) : getId(option)),
@@ -100,9 +98,52 @@ export const useSelect = <T,>({
     return renderValueContent(selectedValue);
   }, [selectedValue, renderValueContent, placeholder]);
 
+  const cachedOptions = useMemo(() => {
+    return Array.from(optionsCache.values());
+  }, [optionsCache]);
+
+  useEffect(() => {
+    setOptionsCache((prev) => {
+      const newCache = new Map<string | number, T>();
+
+      options.forEach((option) => newCache.set(getId(option), option));
+      const valueArray = Array.isArray(value) ? value : value ? [value] : [];
+
+      valueArray.forEach((val) => {
+        if (prev.has(val)) {
+          const option = prev.get(val);
+          if (option) {
+            newCache.set(val, option);
+          }
+        }
+      });
+
+      return newCache;
+    });
+
+    // return () => {
+    //   setOptionsCache((prev) => {
+    //     const newCache = new Map<string | number, T>();
+    //     const valueArray = Array.isArray(value) ? value : value ? [value] : [];
+
+    //     valueArray.forEach((val) => {
+    //       if (prev.has(val)) {
+    //         const option = prev.get(val);
+    //         if (option) {
+    //           newCache.set(val, option);
+    //         }
+    //       }
+    //     });
+
+    //     return newCache;
+    //   });
+    // };
+  }, [options, value, getId]);
+
   return {
     selectedValue,
     renderedValueContent,
+    cachedOptions,
     renderOptionContent,
     renderValueContent,
     isSelected,

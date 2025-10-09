@@ -1,22 +1,29 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Select } from "./select";
-import { useForm } from "react-hook-form";
-import { Button } from "../button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faQuestion,
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { Placeholder } from "./placeholder";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { Meta, StoryObj } from "@storybook/react";
 import { useRef } from "react";
+import { useForm } from "react-hook-form";
+import { useFiltered } from "../../hooks/use-filtered";
+import { Button } from "../button";
 import { Tooltip } from "../tooltip";
 import { Typography } from "../typography";
+import { Placeholder } from "./placeholder";
+import { Select } from "./select";
+import { comboboxFilterDefault } from "./utils";
 
 const stringOptions = ["Option 1", "Option 2", "Option 3"];
 const complexOptions = [
   { id: "1", label: "Option A" },
   { id: "2", label: "Option B" },
   { id: "3", label: "Option C" },
+];
+const asyncOptions = [
+  { id: "4", label: "Async Option D" },
+  { id: "5", label: "Async Option E" },
+  { id: "6", label: "Async Option F" },
 ];
 
 type Story = StoryObj<typeof Select>;
@@ -220,6 +227,83 @@ export const WithPlaceholder: Story = {
         />
 
         <Button theme="primary" onClick={() => reset()}>
+          Clear values
+        </Button>
+      </div>
+    );
+  },
+};
+
+export const WithCombobox: Story = {
+  render: (args) => {
+    const fetchOptions = async (query: string) => {
+      const response = await new Promise<typeof asyncOptions>((resolve) => {
+        setTimeout(() => {
+          resolve(comboboxFilterDefault(asyncOptions)(query));
+        }, 1000);
+      });
+      return response;
+    };
+
+    const [filteredOptions1, runFilter1] = useFiltered(stringOptions);
+    const [filteredOptions2, runFilter2] = useFiltered(complexOptions);
+    const [filteredOptions3, runFilter3, { isPending }] = useFiltered(
+      complexOptions,
+      {
+        filterFn: fetchOptions,
+        debounce: 150,
+      }
+    );
+
+    const { register, watch, reset } = useForm({
+      values: {
+        select1: null,
+        select2: [],
+        select3: null,
+      },
+    });
+
+    return (
+      <div className="flex flex-col gap-4 max-w-80">
+        <pre>{JSON.stringify(watch(), null, 2)}</pre>
+        <Select
+          height={args.height}
+          disabled={args.disabled}
+          onQuery={runFilter1}
+          options={filteredOptions1}
+          placeholder="Simple combobox"
+          value={watch("select1")}
+          {...register("select1")}
+        />
+
+        <Select
+          height={args.height}
+          disabled={args.disabled}
+          onQuery={runFilter2}
+          options={filteredOptions2}
+          identifier={(option) => option.id}
+          renderOption={(option) => option.label}
+          placeholder="Complex combobox"
+          multiple
+          value={watch("select2")}
+          {...register("select2")}
+        />
+
+        <Select
+          height={args.height}
+          disabled={args.disabled}
+          isPending={isPending}
+          onQuery={runFilter3}
+          options={filteredOptions3}
+          identifier={(option) => option.id}
+          renderOption={(option) => option.label}
+          placeholder="Complex combobox"
+          multiple
+          value={watch("select3")}
+          {...register("select3")}
+        />
+
+        <Button isPending={isPending} theme="primary" onClick={() => reset()}>
           Clear values
         </Button>
       </div>

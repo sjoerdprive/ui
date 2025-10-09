@@ -6,7 +6,6 @@ export const useClickOutside = (
 ) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      console.log("clicked,");
       const refElements = refs
         .map((refOrId) => {
           if (typeof refOrId === "string") {

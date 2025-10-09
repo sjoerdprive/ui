@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export const useKey = (key: string, action: (event: KeyboardEvent) => void) => {
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
-      const eventKey = event.key;
+      const eventKey = event.code;
 
       if (eventKey === key) {
         action(event);

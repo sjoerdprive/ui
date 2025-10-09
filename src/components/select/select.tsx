@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   forwardRef,
   useCallback,
+  useEffect,
   useId,
   useMemo,
   useRef,
   useState,
+  useTransition,
   type ChangeEvent,
   type ForwardedRef,
 } from "react";
@@ -14,11 +16,16 @@ import { twMerge } from "tailwind-merge";
 import { useClickOutside } from "../../hooks/use-click-outside";
 import { useScroll } from "../../hooks/use-scroll";
 import { classnames } from "../../utils";
+import { Input } from "../input";
 import { inputClassVariants } from "../input/class-variants";
 import { useSelect } from "./hooks/use-select";
 import { Listbox } from "./listbox";
 import { Option } from "./option";
 import type { SelectExtraProps } from "./types";
+import { Dropdown } from "./dropdown";
+import { useKey } from "../../hooks/use-key";
+import { useListbox } from "./hooks/use-listbox";
+import { Spinner } from "../spinner";
 
 const SelectComponent = <T,>(
   {
@@ -30,6 +37,8 @@ const SelectComponent = <T,>(
     parents,
     name,
     placeholder,
+    isPending,
+    onQuery,
     onChange,
     identifier,
     renderOption,
@@ -38,30 +47,34 @@ const SelectComponent = <T,>(
   }: SelectExtraProps<T>,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const listboxRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const comboboxRef = useRef<HTMLInputElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const listBoxId = useId();
-
-  useClickOutside([listboxRef, buttonRef, ...(parents ?? [])], () =>
-    setIsExpanded(false)
-  );
-  useScroll(() => setIsExpanded(false));
 
   const showOptions = useMemo(
     () => !buttonProps.disabled && isExpanded,
     [buttonProps.disabled, isExpanded]
   );
 
-  const { renderOptionContent, getId, isSelected, renderedValueContent } =
-    useSelect({
-      options,
-      value,
-      placeholder,
-      identifier,
-      renderOption,
-      renderValue,
-    });
+  const {
+    renderOptionContent,
+    getId,
+    isSelected,
+    cachedOptions,
+    renderedValueContent,
+  } = useSelect({
+    options,
+    value,
+    placeholder,
+    identifier,
+    renderOption,
+    renderValue,
+  });
+
+  const [focusIndex, reset] = useListbox(cachedOptions, listboxRef);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +83,51 @@ const SelectComponent = <T,>(
     },
     [onChange, multiple]
   );
+
+  const focusCombobox = useCallback(() => {
+    if (!onQuery) return;
+
+    setTimeout(() => {
+      comboboxRef.current?.focus();
+    }, 0);
+  }, [onQuery]);
+
+  const handleOpen = useCallback(() => {
+    setIsExpanded(true);
+    focusCombobox();
+  }, [focusCombobox]);
+
+  const handleClose = useCallback(() => {
+    if (!isExpanded) return;
+
+    onQuery?.("");
+    reset();
+    setIsExpanded(false);
+    buttonRef.current?.focus();
+  }, [isExpanded, onQuery, reset]);
+
+  const handleQuery = useCallback(
+    async (event: ChangeEvent<HTMLInputElement>) => {
+      const query = event.target.value;
+      await onQuery?.(query);
+    },
+    [onQuery]
+  );
+
+  useClickOutside([dropdownRef, buttonRef, ...(parents ?? [])], handleClose);
+  useKey("Escape", handleClose);
+  useKey("Tab", handleClose);
+  useKey("ArrowLeft", focusCombobox);
+  useKey("ArrowRight", focusCombobox);
+
+  useKey("Enter", () => {
+    document.getElementById(`${listBoxId}__${focusIndex}`)?.click();
+  });
+  useKey("Space", () => {
+    document.getElementById(`${listBoxId}__${focusIndex}`)?.click();
+  });
+
+  useScroll(handleClose);
 
   return (
     <>
@@ -80,7 +138,7 @@ const SelectComponent = <T,>(
             className: classnames("text-start", className),
           })
         )}
-        onClick={() => setIsExpanded((prev) => !prev)}
+        onClick={() => (isExpanded ? handleClose() : handleOpen())}
         aria-haspopup="listbox"
         aria-expanded={isExpanded}
         aria-controls={listBoxId}
@@ -88,37 +146,60 @@ const SelectComponent = <T,>(
         ref={buttonRef}
         {...buttonProps}
       >
-        <div className="grow overflow-hidden flex">{renderedValueContent}</div>
+        <div className="grow overflow-hidden flex flex-nowrap whitespace-nowrap">
+          {renderedValueContent}
+        </div>
         <FontAwesomeIcon
           className="text-gray-400 ml-auto pl-3"
           icon={showOptions ? faChevronUp : faChevronDown}
         />
       </button>
 
-      <Listbox
-        id={listBoxId}
-        isVisible={showOptions}
-        ref={listboxRef}
-        anchor={buttonRef}
-      >
-        {options?.map((option) => {
-          const optionId = getId(option);
-          const isChecked = isSelected(option);
+      <Dropdown isVisible={showOptions} anchor={buttonRef} ref={dropdownRef}>
+        {onQuery && (
+          <div className="px-3 py-3 border-b border-gray-200 flex flex-col">
+            <Input.Group>
+              <input
+                ref={comboboxRef}
+                role="combobox"
+                className="px-3 min-w-0"
+                aria-owns={listBoxId}
+                aria-expanded={isExpanded}
+                onChange={handleQuery}
+                onFocus={reset}
+              />
+              <Input.Affix className="aspect-square h-full">
+                {isPending && <Spinner theme="primary" height="md" />}
+              </Input.Affix>
+            </Input.Group>
+          </div>
+        )}
+        <Listbox
+          id={listBoxId}
+          aria-activedescendant={`${listBoxId}__${focusIndex}`}
+          ref={listboxRef}
+        >
+          {cachedOptions?.map((option, index) => {
+            const optionId = getId(option);
+            const isChecked = isSelected(option);
 
-          return (
-            <Option
-              ref={ref}
-              type={multiple ? "checkbox" : "radio"}
-              name={name}
-              value={optionId}
-              checked={isChecked}
-              onChange={handleChange}
-            >
-              {renderOptionContent(option as T & T[])}
-            </Option>
-          );
-        })}
-      </Listbox>
+            return (
+              <Option
+                id={`${listBoxId}__${index}`}
+                ref={ref}
+                type={multiple ? "checkbox" : "radio"}
+                name={name}
+                value={optionId}
+                checked={isChecked}
+                hasFocus={index === focusIndex}
+                onChange={handleChange}
+              >
+                {renderOptionContent(option as T & T[])}
+              </Option>
+            );
+          })}
+        </Listbox>
+      </Dropdown>
     </>
   );
 };

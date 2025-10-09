@@ -4,11 +4,13 @@ import type { InputStyles } from "../input";
 export interface SelectProps<T>
   extends Omit<ComponentProps<"button">, "value" | "onChange">,
     InputStyles {
-  renderOption?: (value: T) => ReactNode;
   options: T[];
   parents?: (string | RefObject<HTMLElement>)[];
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: ReactNode;
+  renderOption?: (value: T) => ReactNode;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onQuery?: (query: string) => Promise<void> | void;
+  isPending?: boolean;
 }
 export interface MultipleProp<T> {
   multiple: true;
