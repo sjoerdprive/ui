@@ -17,6 +17,7 @@ export const Dialog = <T extends HTMLElement | null>({
   children,
   onClose,
   title,
+  className,
   ...popperProps
 }: DialogProps<T>) => {
   const showHeader = useMemo(() => !!(onClose || title), [onClose, title]);
@@ -29,6 +30,7 @@ export const Dialog = <T extends HTMLElement | null>({
           focusTrapOptions={{
             escapeDeactivates: !!onClose,
           }}
+          className={className}
         >
           {showHeader && (
             <Header>

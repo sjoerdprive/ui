@@ -9,10 +9,15 @@ import { useKey } from "../../../hooks/use-key";
 
 export const useListbox = <T, R extends HTMLElement | null>(
   items: T[],
-  listboxRef: RefObject<R>
+  listboxRef: RefObject<R>,
+  onChange?: (index: number) => void
 ) => {
   const [focusIndex, setFocusIndex] = useState<number>(-1);
   const numberOfItems = useMemo(() => items.length, [items]);
+
+  const reset = useCallback(() => {
+    setFocusIndex(-1);
+  }, []);
 
   useKey("ArrowUp", () => {
     if (!listboxRef?.current) return;
@@ -23,7 +28,10 @@ export const useListbox = <T, R extends HTMLElement | null>(
       if (prev === undefined) {
         return numberOfItems - 1;
       }
-      return prev === 0 ? numberOfItems - 1 : prev - 1;
+      const updatedIndex = prev === 0 ? numberOfItems - 1 : prev - 1;
+
+      onChange?.(updatedIndex);
+      return updatedIndex;
     });
   });
 
@@ -36,13 +44,26 @@ export const useListbox = <T, R extends HTMLElement | null>(
       if (prev === undefined) {
         return 0;
       }
-      return prev === numberOfItems - 1 ? 0 : prev + 1;
+      const updatedIndex = prev === numberOfItems - 1 ? 0 : prev + 1;
+
+      onChange?.(updatedIndex);
+      return updatedIndex;
     });
   });
 
-  const reset = useCallback(() => {
-    setFocusIndex(-1);
-  }, []);
+  useKey("Home", () => {
+    if (!listboxRef?.current) return;
+
+    setFocusIndex(0);
+    onChange?.(0);
+  });
+
+  useKey("End", () => {
+    if (!listboxRef?.current) return;
+
+    setFocusIndex(numberOfItems - 1);
+    onChange?.(numberOfItems - 1);
+  });
 
   useEffect(() => {
     if (listboxRef?.current) return;

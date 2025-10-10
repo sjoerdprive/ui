@@ -10,13 +10,18 @@ export const Listbox = forwardRef(
   ) => {
     return (
       <ul
+        onKeyDown={(e) => {
+          if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault();
+          }
+        }}
         ref={ref}
         role="listbox"
         tabIndex={-1}
-        className={classnames("w-full flex flex-col outline-0", className)}
+        className={classnames("outline-0 overflow-y-scroll", className)}
         {...ulProps}
       >
-        {children}
+        <div className="flex flex-col h-fit">{children}</div>
       </ul>
     );
   }

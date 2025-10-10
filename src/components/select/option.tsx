@@ -13,12 +13,14 @@ export const Option = forwardRef(
       children,
       className,
       hasFocus,
+      id,
       ...inputProps
     }: OptionComponentProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     return (
       <label
+        id={id}
         role="option"
         className={classnames(
           "text-left px-3 py-2 hover:bg-gray-100 has-checked:bg-primary-50 has-checked:hover:bg-primary-100 focus-within:bg-primary-50",

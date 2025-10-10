@@ -1,32 +1,55 @@
-import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
+import {
+  forwardRef,
+  useMemo,
+  type ComponentProps,
+  type ForwardedRef,
+} from "react";
 import { Popper } from "../popper";
 import type { PopperProps } from "../popper/types";
 import { useWidth } from "../../hooks/use-width";
 import { classnames } from "../../utils";
 
-interface DropdownProps extends ComponentProps<"div">, PopperProps {}
+const windowMargin = 32;
+
+interface DropdownProps extends ComponentProps<"div">, PopperProps {
+  zIndex?: number;
+}
 
 export const Dropdown = forwardRef(
   (
-    { className, isVisible, anchor, children, ...ulProps }: DropdownProps,
+    {
+      className,
+      isVisible,
+      anchor,
+      children,
+      zIndex = 60,
+      ...divProps
+    }: DropdownProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const width = useWidth(anchor);
+    const rect = anchor?.current?.getBoundingClientRect();
+
+    const maxHeight = useMemo(() => {
+      if (!rect) return undefined;
+      return window.innerHeight - (rect.y + rect.height) - windowMargin;
+    }, [rect]);
 
     return (
-      <Popper anchor={anchor} isVisible={isVisible}>
+      <Popper anchor={anchor} isVisible={isVisible} style={{ zIndex }}>
         <div
           ref={ref}
           className={classnames(
-            "shadow-lg rounded border border-gray-200 bg-white",
+            "shadow-lg rounded-lg border border-gray-200 bg-white overflow-hidden",
             className
           )}
           style={
             {
               width,
+              maxHeight,
             } as React.CSSProperties
           }
-          {...ulProps}
+          {...divProps}
         >
           {children}
         </div>

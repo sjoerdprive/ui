@@ -6,9 +6,7 @@ type Story = StoryObj<typeof FormPage>;
 const meta = {
   title: "Pages/FormPage",
   component: FormPage,
-  args: {
-    label: "FormPage",
-  },
+  args: {},
 } satisfies Meta<typeof FormPage>;
 
 export const Default: Story = {};

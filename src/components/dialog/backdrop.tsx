@@ -12,7 +12,7 @@ export const Backdrop = ({
   return (
     <div
       className={classnames(
-        "bg-transparent z-40 backdrop-blur-none fixed inset-0 transition-all",
+        "bg-transparent z-20 backdrop-blur-none fixed inset-0 transition-all",
         {
           "backdrop-blur-xs bg-black/10": isMounted,
         },

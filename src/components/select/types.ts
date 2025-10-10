@@ -5,12 +5,12 @@ export interface SelectProps<T>
   extends Omit<ComponentProps<"button">, "value" | "onChange">,
     InputStyles {
   options: T[];
-  parents?: (string | RefObject<HTMLElement>)[];
+  parents?: (string | RefObject<HTMLElement | null>)[];
   placeholder?: ReactNode;
+  isPending?: boolean;
   renderOption?: (value: T) => ReactNode;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onQuery?: (query: string) => Promise<void> | void;
-  isPending?: boolean;
 }
 export interface MultipleProp<T> {
   multiple: true;

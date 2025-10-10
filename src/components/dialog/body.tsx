@@ -14,7 +14,7 @@ export const Body = ({
     >
       <div
         className={classnames(
-          "bg-white rounded-lg overflow-hidden shadow-lg w-96 max-w-dvw z-60 fixed",
+          "bg-white rounded-lg overflow-hidden shadow-lg max-w-dvw z-60 fixed",
           className
         )}
         {...bodyProps}

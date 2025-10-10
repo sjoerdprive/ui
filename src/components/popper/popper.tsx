@@ -1,20 +1,28 @@
 import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import { createPortal } from "react-dom";
+import { classnames } from "../../utils";
 import type { PopperProps as ExtraPopperProps } from "./types";
 
 const offset = 4;
 
 interface PopperProps<T extends HTMLElement | null>
-  extends Omit<ComponentProps<"div">, "className">,
+  extends ComponentProps<"div">,
     ExtraPopperProps<T> {}
 
 const PopperComponent = <T extends HTMLElement | null>(
-  { children, anchor, isVisible, ...divProps }: PopperProps<T>,
+  {
+    children,
+    anchor,
+    className,
+    isVisible,
+    style,
+    ...divProps
+  }: PopperProps<T>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
-  if (!isVisible) return null;
-
   const rect = anchor?.current?.getBoundingClientRect();
+
+  if (!isVisible) return null;
 
   return createPortal(
     <div
@@ -23,12 +31,13 @@ const PopperComponent = <T extends HTMLElement | null>(
       style={{
         left: rect?.x ?? 0,
         top: (rect?.y ?? 0) + (rect?.height ?? 0) + offset,
+        ...style,
       }}
-      className="fixed"
+      className={classnames("fixed", className)}
     >
       {children}
     </div>,
-    document.body
+    anchor?.current?.parentElement ?? document.body
   );
 };
 

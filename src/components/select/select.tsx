@@ -3,17 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   forwardRef,
   useCallback,
+  useEffect,
   useId,
   useMemo,
   useRef,
   useState,
   type ChangeEvent,
-  type ForwardedRef
+  type ForwardedRef,
 } from "react";
 import { twMerge } from "tailwind-merge";
-import { useClickOutside } from "../../hooks/use-click-outside";
 import { useKey } from "../../hooks/use-key";
-import { useScroll } from "../../hooks/use-scroll";
 import { classnames } from "../../utils";
 import { Input } from "../input";
 import { inputClassVariants } from "../input/class-variants";
@@ -24,6 +23,7 @@ import { useSelect } from "./hooks/use-select";
 import { Listbox } from "./listbox";
 import { Option } from "./option";
 import type { SelectExtraProps } from "./types";
+import { useClickOutside } from "../../hooks/use-click-outside";
 
 const SelectComponent = <T,>(
   {
@@ -32,7 +32,6 @@ const SelectComponent = <T,>(
     options,
     value,
     multiple,
-    parents,
     name,
     placeholder,
     isPending,
@@ -72,7 +71,23 @@ const SelectComponent = <T,>(
     renderValue,
   });
 
-  const [focusIndex, reset] = useListbox(cachedOptions, listboxRef);
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      if (listboxRef.current) {
+        const idToFocus = `${listBoxId}__${index}`;
+        const element = listboxRef.current.querySelector(`#${idToFocus}`);
+
+        element?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    },
+    [listBoxId]
+  );
+
+  const [focusIndex, reset] = useListbox(
+    cachedOptions,
+    listboxRef,
+    scrollToIndex
+  );
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -112,7 +127,7 @@ const SelectComponent = <T,>(
     [onQuery]
   );
 
-  useClickOutside([dropdownRef, buttonRef, ...(parents ?? [])], handleClose);
+  useClickOutside([dropdownRef, buttonRef], handleClose);
   useKey("Escape", handleClose);
   useKey("Tab", handleClose);
   useKey("ArrowLeft", focusCombobox);
@@ -125,8 +140,6 @@ const SelectComponent = <T,>(
     document.getElementById(`${listBoxId}__${focusIndex}`)?.click();
   });
 
-  useScroll(handleClose);
-
   return (
     <>
       <button
@@ -136,7 +149,7 @@ const SelectComponent = <T,>(
             className: classnames("text-start", className),
           })
         )}
-        onClick={() => (isExpanded ? handleClose() : handleOpen())}
+        onClick={() => handleOpen()}
         aria-haspopup="listbox"
         aria-expanded={isExpanded}
         aria-controls={listBoxId}
@@ -153,9 +166,15 @@ const SelectComponent = <T,>(
         />
       </button>
 
-      <Dropdown isVisible={showOptions} anchor={buttonRef} ref={dropdownRef}>
+      <Dropdown
+        isVisible={showOptions}
+        anchor={buttonRef}
+        ref={dropdownRef}
+        zIndex={120}
+        className="flex flex-col"
+      >
         {onQuery && (
-          <div className="px-3 py-3 border-b border-gray-200 flex flex-col">
+          <div className="px-3 py-3 border-b border-gray-200 flex flex-col bg-white">
             <Input.Group>
               <input
                 ref={comboboxRef}

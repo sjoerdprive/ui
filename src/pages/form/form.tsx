@@ -1,19 +1,83 @@
+import { faker } from "@faker-js/faker";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Typography } from "../../components/typography";
-import { Input } from "../../components/input";
+import { z } from "zod";
+import { Button } from "../../components/button";
+import { Dialog } from "../../components/dialog";
+import { Field } from "../../components/field";
+import { Select } from "../../components/select";
+import { Toggle } from "../../components/toggle";
+import { useFiltered } from "../../hooks/use-filtered";
+
+const options = Array.from({ length: 20 }).map(() => ({
+  id: faker.string.uuid(),
+  label: faker.music.songName(),
+}));
+
+const schema = z.object({
+  sendInvite: z.boolean(),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  song: z.array(z.string()).min(1, "Select at least one option"),
+});
 
 export const FormPage = () => {
-  const { register } = useForm();
+  const [songOptions, runFilter] = useFiltered(options);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  const { register, watch } = useForm({
+    values: {
+      sendInvite: false,
+      name: "",
+      song: [],
+    },
+    resolver: zodResolver(schema),
+  });
 
   return (
-    <div className="max-w-180 flex flex-col gap-6 p-6 rounded-lg border border-gray-200 shadow-lg">
-      <Typography as="h2" size="h3">
-        This is a form page. You can add your form components here.
-      </Typography>
-
-      <div className="grid-cols-12 grid gap-3">
-        <Input className="col-span-4" placeholder="Enter name" />
-      </div>
-    </div>
+    <>
+      <Button onClick={() => setIsExpanded(true)} theme="primary">
+        Open form
+      </Button>
+      <Dialog
+        isVisible={isExpanded}
+        title="Form example"
+        ref={dialogRef}
+        className="w-160"
+      >
+        <Dialog.Main className="flex flex-col gap-3 ">
+          <div className="grid-cols-12 grid gap-3">
+            <Toggle
+              className="col-span-12"
+              label="Send invitation"
+              {...register("sendInvite")}
+            />
+            <Field
+              className="col-span-4"
+              placeholder="Enter name"
+              label="Name"
+              {...register("name")}
+            />
+            <Field className="col-span-8" label="Song" inputId="song">
+              <Select
+                onQuery={runFilter}
+                multiple
+                options={songOptions}
+                id="song"
+                placeholder="Select your favorite songs"
+                identifier={(option) => option.id}
+                renderOption={(option) => option.label}
+                value={watch("song")}
+                {...register("song")}
+              />
+            </Field>
+          </div>
+        </Dialog.Main>
+        <Dialog.Footer>
+          <Button onClick={() => setIsExpanded(false)}>Close</Button>
+        </Dialog.Footer>
+      </Dialog>
+    </>
   );
 };
