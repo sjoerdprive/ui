@@ -24,6 +24,7 @@ export const Input = forwardRef(
       multiple,
       children,
       square,
+      variant,
       ...inputProps
     }: GroupInputProps,
     ref: ForwardedRef<HTMLInputElement>
@@ -32,6 +33,7 @@ export const Input = forwardRef(
       <label
         className={twMerge(
           buttonClassVariants({
+            variant,
             height,
             theme,
             square,

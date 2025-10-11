@@ -6,6 +6,7 @@ import { Center } from "./center";
 import { Close } from "./close";
 import { Header } from "./header";
 import { Title } from "./title";
+import { POPPER_DEPTH } from "../../config";
 
 interface DialogProps<T extends HTMLElement | null>
   extends Omit<ComponentProps<typeof Popper<T>>, "title"> {
@@ -18,12 +19,13 @@ export const Dialog = <T extends HTMLElement | null>({
   onClose,
   title,
   className,
+  zIndex = POPPER_DEPTH.DIALOG,
   ...popperProps
 }: DialogProps<T>) => {
   const showHeader = useMemo(() => !!(onClose || title), [onClose, title]);
 
   return (
-    <Popper {...popperProps}>
+    <Popper {...popperProps} zIndex={zIndex}>
       <Backdrop onClick={onClose} />
       <Center>
         <Body

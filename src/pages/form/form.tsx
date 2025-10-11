@@ -16,7 +16,7 @@ const options = Array.from({ length: 20 }).map(() => ({
 }));
 
 const schema = z.object({
-  sendInvite: z.boolean(),
+  sendInvite: z.literal(true),
   name: z.string().min(2, "Name must be at least 2 characters"),
   song: z.array(z.string()).min(1, "Select at least one option"),
 });
@@ -26,9 +26,13 @@ export const FormPage = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  const { register, watch } = useForm({
-    values: {
-      sendInvite: false,
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
+    defaultValues: {
       name: "",
       song: [],
     },
@@ -48,18 +52,24 @@ export const FormPage = () => {
       >
         <Dialog.Main className="flex flex-col gap-3 ">
           <div className="grid-cols-12 grid gap-3">
-            <Toggle
-              className="col-span-12"
-              label="Send invitation"
-              {...register("sendInvite")}
-            />
+            <Field error={errors.sendInvite?.message} className="col-span-12">
+              <Toggle label="Send invitation" {...register("sendInvite")} />
+            </Field>
             <Field
               className="col-span-4"
               placeholder="Enter name"
+              height="lg"
               label="Name"
+              aria-invalid={!!errors.name}
+              error={errors.name?.message}
               {...register("name")}
             />
-            <Field className="col-span-8" label="Song" inputId="song">
+            <Field
+              className="col-span-8"
+              label="Song"
+              inputId="song"
+              error={errors.song?.message}
+            >
               <Select
                 onQuery={runFilter}
                 multiple
@@ -76,6 +86,13 @@ export const FormPage = () => {
         </Dialog.Main>
         <Dialog.Footer>
           <Button onClick={() => setIsExpanded(false)}>Close</Button>
+          <Button
+            isPending={isSubmitting}
+            theme="primary"
+            onClick={handleSubmit(console.log)}
+          >
+            Save
+          </Button>
         </Dialog.Footer>
       </Dialog>
     </>

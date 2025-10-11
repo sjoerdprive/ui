@@ -76,11 +76,10 @@ const SelectComponent = <T,>(
       if (listboxRef.current) {
         const idToFocus = `${listBoxId}__${index}`;
         const element = listboxRef.current.querySelector(`#${idToFocus}`);
-
         element?.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
     },
-    [listBoxId]
+    [listBoxId, listboxRef]
   );
 
   const [focusIndex, reset] = useListbox(
@@ -202,6 +201,7 @@ const SelectComponent = <T,>(
 
             return (
               <Option
+                key={optionId}
                 id={`${listBoxId}__${index}`}
                 ref={ref}
                 type={multiple ? "checkbox" : "radio"}

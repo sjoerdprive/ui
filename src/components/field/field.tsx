@@ -1,5 +1,6 @@
 import {
   forwardRef,
+  useId,
   useMemo,
   type ComponentProps,
   type ForwardedRef,
@@ -21,6 +22,7 @@ export const Field = forwardRef(
     { className, children, label, error, inputId, ...inputProps }: FieldProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
+    const errorId = useId();
     const renderedLabel = useMemo(() => {
       return typeof label === "string" ? (
         <Label htmlFor={inputId}>{label}</Label>
@@ -35,8 +37,12 @@ export const Field = forwardRef(
         className={classnames("flex flex-col justify-end relative", className)}
       >
         {renderedLabel}
-        {children ?? <Input ref={ref} {...inputProps} />}
-        {error && <Error className="absolute bottom-0 left-0">{error}</Error>}
+        {children ?? <Input aria-describedby={errorId} ref={ref} {...inputProps} />}
+        {error && (
+          <Error id={errorId} className="absolute right-3 height-full flex items-center justify-center leading-none bg-red-500 w-4 h-4 text-white rounded-full p-0.5">
+            {error}
+          </Error>
+        )}
       </div>
     );
   }

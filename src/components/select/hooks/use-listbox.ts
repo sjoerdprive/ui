@@ -71,5 +71,13 @@ export const useListbox = <T, R extends HTMLElement | null>(
     setFocusIndex(-1);
   }, [listboxRef]);
 
+  useEffect(() => {
+    if (numberOfItems === 0) {
+      setFocusIndex(-1);
+    } else if (focusIndex >= numberOfItems) {
+      setFocusIndex(numberOfItems - 1);
+    }
+  }, [numberOfItems, focusIndex]);
+
   return [focusIndex, reset] as const;
 };

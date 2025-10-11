@@ -11,7 +11,7 @@ export const Listbox = forwardRef(
     return (
       <ul
         onKeyDown={(e) => {
-          if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+          if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === " ") {
             e.preventDefault();
           }
         }}

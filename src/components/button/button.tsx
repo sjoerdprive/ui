@@ -16,6 +16,7 @@ export const Button = forwardRef(
       height,
       theme,
       square,
+      variant,
       isPending,
       ...buttonProps
     }: ButtonProps,
@@ -24,7 +25,7 @@ export const Button = forwardRef(
     return (
       <button
         className={twMerge(
-          buttonClassVariants({ theme, height, className, square })
+          buttonClassVariants({ theme, variant, height, className, square })
         )}
         {...buttonProps}
         ref={ref}

@@ -8,6 +8,7 @@ import { Popper } from "../popper";
 import type { PopperProps } from "../popper/types";
 import { useWidth } from "../../hooks/use-width";
 import { classnames } from "../../utils";
+import { POPPER_DEPTH } from "../../config";
 
 const windowMargin = 32;
 
@@ -22,7 +23,7 @@ export const Dropdown = forwardRef(
       isVisible,
       anchor,
       children,
-      zIndex = 60,
+      zIndex = POPPER_DEPTH.DROPDOWN,
       ...divProps
     }: DropdownProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -36,7 +37,7 @@ export const Dropdown = forwardRef(
     }, [rect]);
 
     return (
-      <Popper anchor={anchor} isVisible={isVisible} style={{ zIndex }}>
+      <Popper anchor={anchor} isVisible={isVisible} style={{ zIndex }}> 
         <div
           ref={ref}
           className={classnames(

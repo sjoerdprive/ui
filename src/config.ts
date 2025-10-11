@@ -11,3 +11,10 @@ export interface WithHeight {
 export interface WithTheme {
   theme?: Theme;
 }
+
+export const POPPER_DEPTH = {
+  BASE: 1000,
+  TOOLTIP: 1100,
+  DROPDOWN: 1200,
+  DIALOG: 1300,
+};

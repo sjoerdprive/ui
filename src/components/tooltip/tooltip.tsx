@@ -2,6 +2,7 @@ import { useId, useLayoutEffect, useState, type ComponentProps } from "react";
 import { useIsMounted } from "../../hooks/use-is-mounted";
 import { Popper } from "../popper";
 import { Content } from "./content";
+import { POPPER_DEPTH } from "../../config";
 
 interface TooltipProps extends ComponentProps<typeof Popper> {}
 
@@ -43,7 +44,12 @@ export const Tooltip = ({ children, anchor }: TooltipProps) => {
   }, [anchor, isMounted, id]);
 
   return (
-    <Popper id={id} isVisible={isVisible} anchor={anchor}>
+    <Popper
+      id={id}
+      isVisible={isVisible}
+      anchor={anchor}
+      zIndex={POPPER_DEPTH.TOOLTIP}
+    >
       {typeof children === "string" ? <Content>{children}</Content> : children}
     </Popper>
   );

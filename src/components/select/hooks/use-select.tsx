@@ -99,6 +99,7 @@ export const useSelect = <T,>({
   }, [selectedValue, renderValueContent, placeholder]);
 
   const cachedOptions = useMemo(() => {
+    console.log({ optionsCache });
     return Array.from(optionsCache.values());
   }, [optionsCache]);
 
@@ -110,7 +111,7 @@ export const useSelect = <T,>({
       const valueArray = Array.isArray(value) ? value : value ? [value] : [];
 
       valueArray.forEach((val) => {
-        if (prev.has(val)) {
+        if (prev.has(val) && !newCache.has(val)) {
           const option = prev.get(val);
           if (option) {
             newCache.set(val, option);
@@ -120,24 +121,6 @@ export const useSelect = <T,>({
 
       return newCache;
     });
-
-    // return () => {
-    //   setOptionsCache((prev) => {
-    //     const newCache = new Map<string | number, T>();
-    //     const valueArray = Array.isArray(value) ? value : value ? [value] : [];
-
-    //     valueArray.forEach((val) => {
-    //       if (prev.has(val)) {
-    //         const option = prev.get(val);
-    //         if (option) {
-    //           newCache.set(val, option);
-    //         }
-    //       }
-    //     });
-
-    //     return newCache;
-    //   });
-    // };
   }, [options, value, getId]);
 
   return {

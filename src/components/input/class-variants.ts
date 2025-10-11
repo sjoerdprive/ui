@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority";
 import { heightVariants } from "../../class-variants/height";
 
 export const inputBorderClass =
-  "border border-gray-300 focus:outline outline-accent-500 focus-within:outline has-aria-invalid:outline-red-500 aria-invalid:outline-red-500 aria-expanded:outline";
+  "border border-gray-300 focus:outline-2 outline-accent-500 focus-within:outline-2 has-aria-invalid:outline-red-500 aria-invalid:outline-red-500 aria-invalid:outline-2 aria-expanded:outline-2";
 
 export const inputClassVariants = cva(
   [

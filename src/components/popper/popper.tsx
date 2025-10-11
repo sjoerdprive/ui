@@ -2,12 +2,15 @@ import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import { createPortal } from "react-dom";
 import { classnames } from "../../utils";
 import type { PopperProps as ExtraPopperProps } from "./types";
+import { POPPER_DEPTH } from "../../config";
 
 const offset = 4;
 
 interface PopperProps<T extends HTMLElement | null>
   extends ComponentProps<"div">,
-    ExtraPopperProps<T> {}
+    ExtraPopperProps<T> {
+  zIndex?: number;
+}
 
 const PopperComponent = <T extends HTMLElement | null>(
   {
@@ -16,6 +19,7 @@ const PopperComponent = <T extends HTMLElement | null>(
     className,
     isVisible,
     style,
+    zIndex = POPPER_DEPTH.BASE,
     ...divProps
   }: PopperProps<T>,
   ref: ForwardedRef<HTMLDivElement>
@@ -31,6 +35,7 @@ const PopperComponent = <T extends HTMLElement | null>(
       style={{
         left: rect?.x ?? 0,
         top: (rect?.y ?? 0) + (rect?.height ?? 0) + offset,
+        zIndex,
         ...style,
       }}
       className={classnames("fixed", className)}

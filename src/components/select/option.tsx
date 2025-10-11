@@ -31,7 +31,7 @@ export const Option = forwardRef(
         )}
       >
         <input
-          className="sr-only"
+          className="hidden"
           ref={ref}
           type={multiple ? "checkbox" : "radio"}
           {...inputProps}

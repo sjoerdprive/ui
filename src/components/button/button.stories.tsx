@@ -11,6 +11,12 @@ type Story = StoryObj<typeof Button>;
 const meta = {
   title: "Components/Button",
   component: Button,
+  argTypes: {
+    variant: {
+      control: "select",
+      options: ["solid", "border"],
+    },
+  },
   args: {
     height: "md",
     disabled: false,
