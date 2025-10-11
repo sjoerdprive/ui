@@ -11,7 +11,7 @@ export const Content = ({
   return (
     <div
       className={classnames(
-        "px-3 py-2 bg-black text-white shadow-md rounded-md translate-y-1 opacity-0 transition-all",
+        "px-3 py-2 bg-black text-white shadow-md rounded-md translate-y-1 opacity-0 transition",
         {
           "opacity-100 translate-y-0": isMounted,
         },

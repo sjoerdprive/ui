@@ -9,6 +9,7 @@ import { Field } from "../../components/field";
 import { Select } from "../../components/select";
 import { Toggle } from "../../components/toggle";
 import { useFiltered } from "../../hooks/use-filtered";
+import { Error } from "../../components/field/error";
 
 const options = Array.from({ length: 20 }).map(() => ({
   id: faker.string.uuid(),
@@ -52,9 +53,15 @@ export const FormPage = () => {
       >
         <Dialog.Main className="flex flex-col gap-3 ">
           <div className="grid-cols-12 grid gap-3">
-            <Field error={errors.sendInvite?.message} className="col-span-12">
-              <Toggle label="Send invitation" {...register("sendInvite")} />
-            </Field>
+            <Toggle
+              label={
+                <>
+                  Send invitation <Error>{errors.sendInvite?.message}</Error>
+                </>
+              }
+              {...register("sendInvite")}
+              className="col-span-12"
+            />
             <Field
               className="col-span-4"
               placeholder="Enter name"

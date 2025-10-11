@@ -25,7 +25,7 @@ export const Field = forwardRef(
     const errorId = useId();
     const renderedLabel = useMemo(() => {
       return typeof label === "string" ? (
-        <Label htmlFor={inputId}>{label}</Label>
+        <Label htmlFor={inputId}>{label} </Label>
       ) : (
         label
       );
@@ -36,12 +36,19 @@ export const Field = forwardRef(
         role="group"
         className={classnames("flex flex-col justify-end relative", className)}
       >
-        {renderedLabel}
-        {children ?? <Input aria-describedby={errorId} ref={ref} {...inputProps} />}
-        {error && (
-          <Error id={errorId} className="absolute right-3 height-full flex items-center justify-center leading-none bg-red-500 w-4 h-4 text-white rounded-full p-0.5">
-            {error}
-          </Error>
+        {(label || error) && (
+          <div className="flex items-center mb-1">
+            {renderedLabel}
+            <Error
+              id={errorId}
+              className="flex items-center justify-center leading-none text-red-500 p-0.5 text-xs"
+            >
+              {error}
+            </Error>
+          </div>
+        )}
+        {children ?? (
+          <Input aria-describedby={errorId} ref={ref} {...inputProps} />
         )}
       </div>
     );
