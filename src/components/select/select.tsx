@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   forwardRef,
   useCallback,
-  useEffect,
   useId,
   useMemo,
   useRef,
@@ -12,18 +11,17 @@ import {
   type ForwardedRef,
 } from "react";
 import { twMerge } from "tailwind-merge";
+import { useClickOutside } from "../../hooks/use-click-outside";
 import { useKey } from "../../hooks/use-key";
 import { classnames } from "../../utils";
+import { Dropdown } from "../dropdown";
 import { Input } from "../input";
 import { inputClassVariants } from "../input/class-variants";
+import { Listbox } from "../listbox";
 import { Spinner } from "../spinner";
-import { Dropdown } from "./dropdown";
-import { useListbox } from "./hooks/use-listbox";
-import { useSelect } from "./hooks/use-select";
-import { Listbox } from "./listbox";
 import { Option } from "./option";
 import type { SelectExtraProps } from "./types";
-import { useClickOutside } from "../../hooks/use-click-outside";
+import { useSelect } from "./use-select";
 
 const SelectComponent = <T,>(
   {
@@ -71,37 +69,12 @@ const SelectComponent = <T,>(
     renderValue,
   });
 
-  const scrollToIndex = useCallback(
-    (index: number) => {
-      if (listboxRef.current) {
-        const idToFocus = `${listBoxId}__${index}`;
-        const element = listboxRef.current.querySelector(`#${idToFocus}`);
-        element?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
-    },
-    [listBoxId, listboxRef]
-  );
-
-  const [focusIndex, reset] = useListbox(
-    cachedOptions,
-    listboxRef,
-    scrollToIndex
-  );
-
-  const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      onChange?.(event);
-      setIsExpanded(!!multiple);
-    },
-    [onChange, multiple]
-  );
-
   const focusCombobox = useCallback(() => {
     if (!onQuery) return;
 
-    setTimeout(() => {
+    queueMicrotask(() => {
       comboboxRef.current?.focus();
-    }, 0);
+    });
   }, [onQuery]);
 
   const handleOpen = useCallback(() => {
@@ -113,10 +86,19 @@ const SelectComponent = <T,>(
     if (!isExpanded) return;
 
     onQuery?.("");
-    reset();
     setIsExpanded(false);
     buttonRef.current?.focus();
-  }, [isExpanded, onQuery, reset]);
+  }, [isExpanded, onQuery]);
+
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      onChange?.(event);
+      if (!multiple) {
+        handleClose();
+      }
+    },
+    [onChange, multiple, handleClose]
+  );
 
   const handleQuery = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
@@ -131,13 +113,6 @@ const SelectComponent = <T,>(
   useKey("Tab", handleClose);
   useKey("ArrowLeft", focusCombobox);
   useKey("ArrowRight", focusCombobox);
-
-  useKey("Enter", () => {
-    document.getElementById(`${listBoxId}__${focusIndex}`)?.click();
-  });
-  useKey("Space", () => {
-    document.getElementById(`${listBoxId}__${focusIndex}`)?.click();
-  });
 
   return (
     <>
@@ -174,15 +149,14 @@ const SelectComponent = <T,>(
       >
         {onQuery && (
           <div className="px-3 py-3 border-b border-gray-200 flex flex-col bg-white">
-            <Input.Group>
+            <Input.Group className="grow">
               <input
                 ref={comboboxRef}
                 role="combobox"
-                className="px-3 min-w-0"
-                aria-owns={listBoxId}
+                className="px-3 min-w-0 grow"
+                aria-controls={listBoxId}
                 aria-expanded={isExpanded}
                 onChange={handleQuery}
-                onFocus={reset}
               />
               <Input.Affix className="aspect-square h-full">
                 {isPending && <Spinner theme="primary" height="md" />}
@@ -192,29 +166,32 @@ const SelectComponent = <T,>(
         )}
         <Listbox
           id={listBoxId}
-          aria-activedescendant={`${listBoxId}__${focusIndex}`}
           ref={listboxRef}
+          options={cachedOptions}
+          aria-live="polite"
         >
-          {cachedOptions?.map((option, index) => {
-            const optionId = getId(option);
-            const isChecked = isSelected(option);
+          {({ getId: getListboxId, isFocused }) =>
+            cachedOptions?.map((option, index) => {
+              const optionId = getId(option);
+              const isChecked = isSelected(option);
 
-            return (
-              <Option
-                key={optionId}
-                id={`${listBoxId}__${index}`}
-                ref={ref}
-                type={multiple ? "checkbox" : "radio"}
-                name={name}
-                value={optionId}
-                checked={isChecked}
-                hasFocus={index === focusIndex}
-                onChange={handleChange}
-              >
-                {renderOptionContent(option as T & T[])}
-              </Option>
-            );
-          })}
+              return (
+                <Option
+                  key={optionId}
+                  id={getListboxId(index)}
+                  ref={ref}
+                  type={multiple ? "checkbox" : "radio"}
+                  name={name}
+                  value={optionId}
+                  checked={isChecked}
+                  hasFocus={isFocused(index)}
+                  onChange={handleChange}
+                >
+                  {renderOptionContent(option as T & T[])}
+                </Option>
+              );
+            })
+          }
         </Listbox>
       </Dropdown>
     </>

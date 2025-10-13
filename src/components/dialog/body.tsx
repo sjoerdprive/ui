@@ -13,6 +13,7 @@ export const Body = ({
       focusTrapOptions={{ escapeDeactivates: false, ...focusTrapOptions }}
     >
       <div
+        role="dialog"
         className={classnames(
           "bg-white rounded-lg overflow-hidden shadow-lg w-120 max-w-dvw z-60 fixed",
           className

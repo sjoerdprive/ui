@@ -6,10 +6,10 @@ import {
   type ForwardedRef,
   type ReactNode,
 } from "react";
-import { Input } from "../input";
 import { classnames } from "../../utils";
-import { Label } from "./label";
+import { Input } from "../input";
 import { Error } from "./error";
+import { Label } from "./label";
 
 interface FieldProps extends ComponentProps<typeof Input> {
   label?: ReactNode;
@@ -25,11 +25,13 @@ export const Field = forwardRef(
     const errorId = useId();
     const renderedLabel = useMemo(() => {
       return typeof label === "string" ? (
-        <Label htmlFor={inputId}>{label} </Label>
+        <Label htmlFor={inputId} aria-describedby={errorId}>
+          {label}
+        </Label>
       ) : (
         label
       );
-    }, [label, inputId]);
+    }, [label, inputId, errorId]);
 
     return (
       <div
@@ -48,7 +50,12 @@ export const Field = forwardRef(
           </div>
         )}
         {children ?? (
-          <Input aria-describedby={errorId} ref={ref} {...inputProps} />
+          <Input
+            aria-description={error}
+            aria-invalid={!!error}
+            ref={ref}
+            {...inputProps}
+          />
         )}
       </div>
     );

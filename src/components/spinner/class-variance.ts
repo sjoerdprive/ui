@@ -6,11 +6,15 @@ export const spinnerClassVariants = cva(
   {
     variants: {
       height: {
+        xs: "border",
         sm: "border-2",
         md: "border-2",
         lg: "border-2",
       },
       theme: themeVariants,
+    },
+    defaultVariants: {
+      height: "md",
     },
   }
 );
@@ -18,9 +22,13 @@ export const spinnerClassVariants = cva(
 export const spinnerContainerClass = cva("relative aspect-square", {
   variants: {
     height: {
+      xs: "h-2",
       sm: "h-3",
       md: "h-4",
       lg: "h-5",
     },
   },
+  defaultVariants: {
+    height: "md",
+  }
 });

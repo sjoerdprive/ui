@@ -5,7 +5,7 @@ import {
   useState,
   type RefObject,
 } from "react";
-import { useKey } from "../../../hooks/use-key";
+import { useKey } from "../../hooks/use-key";
 
 export const useListbox = <T, R extends HTMLElement | null>(
   items: T[],
@@ -19,9 +19,10 @@ export const useListbox = <T, R extends HTMLElement | null>(
     setFocusIndex(-1);
   }, []);
 
-  useKey("ArrowUp", () => {
+  useKey("ArrowUp", (e) => {
     if (!listboxRef?.current) return;
 
+    e.preventDefault();
     listboxRef?.current?.focus();
 
     setFocusIndex((prev) => {
@@ -35,8 +36,9 @@ export const useListbox = <T, R extends HTMLElement | null>(
     });
   });
 
-  useKey("ArrowDown", () => {
+  useKey("ArrowDown", (e) => {
     if (!listboxRef?.current) return;
+    e.preventDefault();
 
     listboxRef?.current?.focus();
 

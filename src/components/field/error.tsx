@@ -18,6 +18,7 @@ export const Error = ({
   return (
     <>
       <span
+        role="alert"
         ref={errorRef}
         className={classnames(
           "flex items-center justify-center leading-none text-red-500 p-0.5 text-xs",

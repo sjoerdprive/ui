@@ -5,11 +5,12 @@ import { themeVariants } from "../../class-variants/theme";
 export const toggleClassVariants = cva(
   [
     inputBorderClass,
-    "w-auto aspect-video rounded-full bg-gray-300 has-checked:bg-(--theme-500) relative transition-colors outline-offset-1",
+    "w-auto aspect-video !rounded-full bg-gray-300 has-checked:bg-(--theme-500) relative transition-colors outline-offset-1",
   ],
   {
     variants: {
       height: {
+        xs: "h-4 p-0",
         sm: "h-5 p-px",
         md: "h-6 p-0.5",
         lg: "h-7 p-1",

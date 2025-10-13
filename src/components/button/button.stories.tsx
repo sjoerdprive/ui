@@ -1,10 +1,13 @@
+import { faker } from "@faker-js/faker";
+import { faChevronDown, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { Meta, StoryObj } from "@storybook/react";
+import { useRef, useState, type ComponentProps } from "react";
+import { Dropdown } from "../dropdown";
 import { Button } from "./button";
 import { Group } from "./button-group";
-import type { Meta, StoryObj } from "@storybook/react";
 import { Input } from "./group-input";
-import type { ComponentProps } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { Listbox } from "../listbox";
 
 type Story = StoryObj<typeof Button>;
 
@@ -27,15 +30,49 @@ const meta = {
 
 export const Default: Story = {};
 
+export const WithIcon: Story = {
+  args: {
+    children: (
+      <>
+        Button <FontAwesomeIcon icon={faTimes} />
+      </>
+    ),
+  },
+};
+
 export const AsGroup: Story = {
-  render: (args) => (
-    <Group>
-      <Button {...args}>Main action</Button>
-      <Button {...args} square>
-        <FontAwesomeIcon icon={faChevronDown} />
-      </Button>
-    </Group>
-  ),
+  render: (args) => {
+    const groupRef = useRef<HTMLDivElement>(null);
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const menuItems = new Array(5)
+      .fill(null)
+      .map(() => faker.internet.userAgent());
+
+    return (
+      <Group ref={groupRef}>
+        <Button {...args}>Main action</Button>
+        <Button {...args} square onClick={() => setIsExpanded(!isExpanded)}>
+          <FontAwesomeIcon icon={faChevronDown} />
+          <Dropdown isVisible={isExpanded} anchor={groupRef} className="w-fit">
+            <Listbox role="menu" options={menuItems}>
+              {({ getId, isFocused }) => {
+                return menuItems.map((item, index) => (
+                  <Button
+                    id={getId(index)}
+                    theme={isFocused(index) ? "primary" : "secondary"}
+                    key={item}
+                  >
+                    {item}
+                  </Button>
+                ));
+              }}
+            </Listbox>
+          </Dropdown>
+        </Button>
+      </Group>
+    );
+  },
 };
 
 export const AsRadioGroup: Story = {

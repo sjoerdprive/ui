@@ -2,9 +2,9 @@ import { useCallback, useState } from "react";
 import { comboboxFilterDefault } from "../components/select/utils";
 import { useDebounce } from "./use-debounce";
 
-export interface UseFilteredOptions<T> {
+export interface UseFilteredOptions<T, R extends string> {
   minQueryLength?: number;
-  filterFn?: (query: string) => T[] | Promise<T[]>;
+  filterFn?: (query: R) => T[] | Promise<T[]>;
   debounce?: number;
 }
 
@@ -13,7 +13,10 @@ interface UseFilteredStatus {
   isError: boolean;
 }
 
-export const useFiltered = <T>(items: T[], options?: UseFilteredOptions<T>) => {
+export const useFiltered = <T, R extends string>(
+  items: T[],
+  options?: UseFilteredOptions<T, R>
+) => {
   const [results, setResults] = useState<T[]>(items);
   const [status, setStatus] = useState<UseFilteredStatus>({
     isError: false,
@@ -25,11 +28,13 @@ export const useFiltered = <T>(items: T[], options?: UseFilteredOptions<T>) => {
     filterFn: comboboxFilterDefault<T>(items),
     debounce: 0,
     ...options,
-  } satisfies UseFilteredOptions<T>;
+  } satisfies UseFilteredOptions<T, R>;
   const executeFilter = useCallback(
-    async (query: string) => {
+    async (query: R) => {
       const returnAllItems =
-        (minQueryLength && query?.length < minQueryLength) ||
+        (typeof query === "string" &&
+          minQueryLength &&
+          query?.length < minQueryLength) ||
         !filterFn ||
         !query;
 

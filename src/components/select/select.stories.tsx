@@ -40,8 +40,6 @@ const meta = {
   },
 } satisfies Meta<typeof Select>;
 
-export const Default: Story = {};
-
 export const SimpleOptions: Story = {
   render: (args) => {
     const { register, watch, reset } = useForm({
@@ -146,89 +144,93 @@ export const WithPlaceholder: Story = {
     });
 
     return (
-      <div className="flex flex-col gap-4 max-w-100">
-        <pre>{JSON.stringify(watch(), null, 2)}</pre>
-        <Select
-          height={args.height}
-          disabled={args.disabled}
-          options={stringOptions}
-          placeholder="Simple placeholder"
-          value={watch("select1")}
-          {...register("select1")}
-        />
+      <div className="flex gap-6 max-w-dvw w-200">
+        <div className="flex flex-col gap-4 grow">
+          <Select
+            height={args.height}
+            disabled={args.disabled}
+            options={stringOptions}
+            placeholder="Simple placeholder"
+            value={watch("select1")}
+            {...register("select1")}
+          />
 
-        <Select
-          height={args.height}
-          disabled={args.disabled}
-          options={stringOptions}
-          placeholder={
-            <span className="flex items-baseline gap-1">
-              <FontAwesomeIcon icon={faQuestion} className="text-sm" /> Custom
-              placeholder
-            </span>
-          }
-          multiple
-          value={watch("select2")}
-          {...register("select2")}
-        />
+          <Select
+            height={args.height}
+            disabled={args.disabled}
+            options={stringOptions}
+            placeholder={
+              <span className="flex items-baseline gap-1">
+                <FontAwesomeIcon icon={faQuestion} className="text-sm" /> Custom
+                placeholder
+              </span>
+            }
+            multiple
+            value={watch("select2")}
+            {...register("select2")}
+          />
 
-        <Select
-          height={args.height}
-          disabled={args.disabled}
-          options={stringOptions}
-          placeholder={
-            <Placeholder className="flex gap-2 items-baseline">
-              Custom Select.Placeholder
-              <FontAwesomeIcon
-                ref={tooltipRef}
-                icon={faQuestionCircle}
-                className="text-sm"
-              />{" "}
-              <Tooltip anchor={tooltipRef}>
-                <Tooltip.Content>
-                  This is a tooltip on the placeholder icon.
-                </Tooltip.Content>
-              </Tooltip>
-            </Placeholder>
-          }
-          value={watch("select3")}
-          {...register("select3")}
-        />
+          <Select
+            height={args.height}
+            disabled={args.disabled}
+            options={stringOptions}
+            placeholder={
+              <Placeholder className="flex gap-2 items-baseline">
+                Custom Select.Placeholder
+                <FontAwesomeIcon
+                  ref={tooltipRef}
+                  icon={faQuestionCircle}
+                  className="text-sm"
+                />{" "}
+                <Tooltip anchor={tooltipRef}>
+                  <Tooltip.Content>
+                    This is a tooltip on the placeholder icon.
+                  </Tooltip.Content>
+                </Tooltip>
+              </Placeholder>
+            }
+            value={watch("select3")}
+            {...register("select3")}
+          />
 
-        <Select
-          height={args.height}
-          disabled={args.disabled}
-          options={complexOptions}
-          identifier={(option) => option.id}
-          renderOption={(option) => option.label}
-          placeholder={
-            <Placeholder className="flex gap-2 items-baseline">
-              Custom Select.Placeholder
-            </Placeholder>
-          }
-          value={watch("select4")}
-          {...register("select4")}
-        />
+          <Select
+            height={args.height}
+            disabled={args.disabled}
+            options={complexOptions}
+            identifier={(option) => option.id}
+            renderOption={(option) => option.label}
+            placeholder={
+              <Placeholder className="flex gap-2 items-baseline">
+                Custom Select.Placeholder
+              </Placeholder>
+            }
+            value={watch("select4")}
+            {...register("select4")}
+          />
 
-        <Select
-          height={args.height}
-          disabled={args.disabled}
-          options={complexOptions}
-          identifier={(option) => option.id}
-          renderOption={(option) => option.label}
-          placeholder={
-            <Placeholder className="flex gap-2 items-baseline">
-              Custom Select.Placeholder
-            </Placeholder>
-          }
-          multiple
-          value={watch("select5")}
-          {...register("select5")}
-        />
+          <Select
+            height={args.height}
+            disabled={args.disabled}
+            options={complexOptions}
+            identifier={(option) => option.id}
+            renderOption={(option) => option.label}
+            placeholder={
+              <Placeholder className="flex gap-2 items-baseline">
+                Custom Select.Placeholder
+              </Placeholder>
+            }
+            multiple
+            value={watch("select5")}
+            {...register("select5")}
+          />
 
-        <Button theme="primary" onClick={() => reset()}>
-          Clear values
-        </Button>
+          <Button theme="primary" onClick={() => reset()}>
+            Clear values
+          </Button>
+        </div>
+        <pre className="bg-gray-50 border-gray-200 rounded-md border p-4">
+          {JSON.stringify(watch(), null, 2)}
+        </pre>
       </div>
     );
   },
@@ -264,48 +266,52 @@ export const WithCombobox: Story = {
     });
 
     return (
-      <div className="flex flex-col gap-4 max-w-80">
-        <pre>{JSON.stringify(watch(), null, 2)}</pre>
-        <Select
-          height={args.height}
-          disabled={args.disabled}
-          onQuery={runFilter1}
-          options={filteredOptions1}
-          placeholder="Simple combobox"
-          value={watch("select1")}
-          {...register("select1")}
-        />
+      <div className="flex gap-6 w-200 max-w-dvw">
+        <div className="flex flex-col gap-4 grow">
+          <Select
+            height={args.height}
+            disabled={args.disabled}
+            onQuery={runFilter1}
+            options={filteredOptions1}
+            placeholder="Simple combobox"
+            value={watch("select1")}
+            {...register("select1")}
+          />
 
-        <Select
-          height={args.height}
-          disabled={args.disabled}
-          onQuery={runFilter2}
-          options={filteredOptions2}
-          identifier={(option) => option.id}
-          renderOption={(option) => option.label}
-          placeholder="Complex combobox"
-          multiple
-          value={watch("select2")}
-          {...register("select2")}
-        />
+          <Select
+            height={args.height}
+            disabled={args.disabled}
+            onQuery={runFilter2}
+            options={filteredOptions2}
+            identifier={(option) => option.id}
+            renderOption={(option) => option.label}
+            placeholder="Complex combobox"
+            multiple
+            value={watch("select2")}
+            {...register("select2")}
+          />
 
-        <Select
-          height={args.height}
-          disabled={args.disabled}
-          isPending={isPending}
-          onQuery={runFilter3}
-          options={filteredOptions3}
-          identifier={(option) => option.id}
-          renderOption={(option) => option.label}
-          placeholder="Complex combobox"
-          multiple
-          value={watch("select3")}
-          {...register("select3")}
-        />
+          <Select
+            height={args.height}
+            disabled={args.disabled}
+            isPending={isPending}
+            onQuery={runFilter3}
+            options={filteredOptions3}
+            identifier={(option) => option.id}
+            renderOption={(option) => option.label}
+            placeholder="Complex combobox"
+            multiple
+            value={watch("select3")}
+            {...register("select3")}
+          />
 
-        <Button isPending={isPending} theme="primary" onClick={() => reset()}>
-          Clear values
-        </Button>
+          <Button isPending={isPending} theme="primary" onClick={() => reset()}>
+            Clear values
+          </Button>
+        </div>
+        <pre className="bg-gray-50 border-gray-200 rounded-md border p-4">
+          {JSON.stringify(watch(), null, 2)}
+        </pre>
       </div>
     );
   },

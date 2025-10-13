@@ -13,7 +13,7 @@ export const Group = forwardRef(
         role="group"
         ref={ref}
         className={classnames(
-          "flex *:not-last:rounded-r-none *:not-first:rounded-l-none",
+          "flex *:not-last:rounded-r-none *:not-first:rounded-l-none w-fit",
           className
         )}
         {...divProps}

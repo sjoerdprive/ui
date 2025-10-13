@@ -1,4 +1,4 @@
-export const heightOptions = ["sm", "md", "lg"] as const;
+export const heightOptions = ["xs", "sm", "md", "lg"] as const;
 export const themeOptions = ["primary", "secondary", "accent"] as const;
 
 export type Height = (typeof heightOptions)[number];

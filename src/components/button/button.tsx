@@ -18,22 +18,27 @@ export const Button = forwardRef(
       square,
       variant,
       isPending,
+      onClick,
       ...buttonProps
     }: ButtonProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
     return (
       <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick?.(e);
+        }}
         className={twMerge(
           buttonClassVariants({ theme, variant, height, className, square })
         )}
         {...buttonProps}
         ref={ref}
       >
-        {isPending && (
-          <Spinner className="[--theme-500:currentColor]" height={height}></Spinner>
-        )}
         {children}
+        {isPending && (
+          <Spinner className="[--theme-500:currentColor]" height={height} />
+        )}
       </button>
     );
   }
