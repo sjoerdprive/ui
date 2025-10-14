@@ -4,7 +4,7 @@ import { classnames } from "../../utils";
 import { inputBorderClass } from "../input/class-variants";
 
 export const textAreaClassVariants = cva(
-  ["resize-none overflow-hidden px-3", inputBorderClass],
+  ["resize-none overflow-hidden px-3 h-24", inputBorderClass],
   {
     variants: {
       height: {
@@ -15,7 +15,7 @@ export const textAreaClassVariants = cva(
       },
     },
     defaultVariants: {
-      height: "md",
+      height: "md"
     },
   }
 );

@@ -131,7 +131,7 @@ const SelectComponent = <T,>(
         ref={buttonRef}
         {...buttonProps}
       >
-        <div className="grow overflow-hidden flex flex-nowrap whitespace-nowrap">
+        <div tabIndex={-1} className="grow overflow-x-auto scrollbar-hide flex flex-nowrap whitespace-nowrap">
           {renderedValueContent}
         </div>
         <FontAwesomeIcon

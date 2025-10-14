@@ -9,7 +9,7 @@ interface FilePreviewProps extends ComponentProps<typeof Button> {
   file: FileWithPath;
 }
 
-export const FilePreview = ({
+export const Preview = ({
   children,
   file,
   ...buttonProps

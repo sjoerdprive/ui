@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @source inline("text-*");
+@import 'tailwind-scrollbar-hide/v4';
 
 @theme {
   --color-primary-900: #0d2326;
@@ -46,6 +47,4 @@
   --typography-h4-size: 1.15rem;
   --typography-h5-size: 1.1rem;
   --typography-h6-size: 1.05rem;
-
-  /* --typography-heading-family: "serif"; */
 }

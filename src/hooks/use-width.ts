@@ -3,7 +3,7 @@ import { useIsMounted } from "./use-is-mounted";
 
 export const useWidth = (ref: RefObject<HTMLElement | null> | undefined) => {
   const isMounted = useIsMounted();
-  const [width, setWidth] = useState<number | undefined>(undefined);
+  const [width, setWidth] = useState<number>(0);
 
   useEffect(() => {
     const element = ref?.current;
@@ -31,5 +31,5 @@ export const useWidth = (ref: RefObject<HTMLElement | null> | undefined) => {
     };
   }, [isMounted, ref]);
 
-  return width;
+  return width ?? 0;
 };

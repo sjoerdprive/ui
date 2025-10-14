@@ -13,6 +13,8 @@ import { Select } from "../../components/select";
 import { TextArea } from "../../components/textarea";
 import { Toggle } from "../../components/toggle";
 import { useFiltered } from "../../hooks/use-filtered";
+import type { FileWithPath } from "react-dropzone";
+import { Dropzone } from "../../components/dropzone";
 
 const songs = Array.from({ length: 20 }).map(() => ({
   id: faker.string.uuid(),
@@ -33,6 +35,7 @@ const schema = z.object({
   about: z.string().max(20, "Can not be more than 20 characters").optional(),
   animal: z.string(),
   fruit: z.string().optional(),
+  files: z.array(z.file()).min(1, "Please upload at least one file"),
 });
 
 const searchFruits = async (query: string) => {
@@ -81,6 +84,7 @@ export const FormPage = () => {
       sendInvite: false,
       animal: "",
       fruit: "",
+      files: [],
     },
     resolver: zodResolver(schema),
   });
@@ -111,21 +115,23 @@ export const FormPage = () => {
       >
         <Dialog.Main className="flex flex-col gap-3 ">
           <div className="grid-cols-12 grid gap-3">
-            <div className="col-span-3">
-              <Button
-                height="sm"
-                theme="accent"
-                variant="border"
-                onClick={() => reset()}
-              >
-                Clear form <FontAwesomeIcon icon={faTimes} />
-              </Button>
+            <div className="col-span-full row-span-2 flex">
+              <Field.Error>{errors.files?.message}</Field.Error>
+              <Dropzone
+                variant="avatar"
+                accept={{ "image/*": [] }}
+                className="mr-auto"
+                value={watch("files")}
+                onChange={(value) => setValue("files", value)}
+                aria-invalid={!!errors.files}
+              />
             </div>
             <Toggle
               aria-invalid={!!errors.sendInvite}
               label={
                 <>
-                  Send invitation <Error>{errors.sendInvite?.message}</Error>
+                  Send invitation{" "}
+                  <Field.Error>{errors.sendInvite?.message}</Field.Error>
                 </>
               }
               {...register("sendInvite")}
@@ -224,6 +230,9 @@ export const FormPage = () => {
           </div>
         </Dialog.Main>
         <Dialog.Footer>
+          <Button theme="accent" variant="border" onClick={() => reset()}>
+            Clear form <FontAwesomeIcon icon={faTimes} />
+          </Button>
           <Button onClick={handleClose}>Close</Button>
           <Button
             isPending={isSubmitting}

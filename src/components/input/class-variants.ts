@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority";
 import { heightVariants } from "../../class-variants/height";
 
 export const inputBorderClass =
-  "border border-gray-300 focus:outline-2 rounded-md focus:!outline-accent-500 outline-accent-500 focus-within:outline-2 has-aria-invalid:outline-red-500 aria-invalid:outline-red-500 aria-invalid:outline-2 aria-expanded:outline-2";
+  "border border-gray-300 focus:outline-2 rounded-md focus:!outline-primary-500 outline-primary-500 focus-within:outline-2 has-aria-invalid:outline-red-500 has-aria-invalid:outline-2 aria-invalid:outline-red-500 aria-invalid:outline-2 aria-expanded:outline-2";
 
 export const inputClassVariants = cva(
   [

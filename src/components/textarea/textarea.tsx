@@ -27,7 +27,6 @@ export const TextArea = forwardRef(
     ref: ForwardedRef<HTMLTextAreaElement>
   ) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-
     const combinedRef = useCombinedRefs(ref, textareaRef);
 
     const handleAutosize = () => {
@@ -47,7 +46,7 @@ export const TextArea = forwardRef(
       <textarea
         onInput={handleAutosize}
         ref={combinedRef}
-        style={{ maxHeight, ...style }}
+        style={{ maxHeight, minHeight: !height ? 124 : "unset", ...style }}
         className={textAreaClassVariants({
           height,
           className,
