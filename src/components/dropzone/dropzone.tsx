@@ -14,7 +14,7 @@ import { Preview } from "./file-preview";
 interface DropzoneProps
   extends Omit<
       ComponentProps<"input">,
-      "height" | "placeholder" | "onChange" | "value"
+      "height" | "placeholder" | "onChange" | "value" | "accept"
     >,
     InputStyles {
   placeholder?: ReactNode;
@@ -22,6 +22,7 @@ interface DropzoneProps
   variant?: "default" | "avatar";
   onChange: (files: FileWithPath[]) => void;
   accept?: Accept;
+  multiple?: boolean;
 }
 
 export const Dropzone = forwardRef(

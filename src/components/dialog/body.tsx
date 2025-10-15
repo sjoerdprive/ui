@@ -10,12 +10,16 @@ export const Body = ({
 }: ComponentPropsWithoutRef<"div"> & FocusTrapProps) => {
   return (
     <FocusTrap
-      focusTrapOptions={{ escapeDeactivates: false, ...focusTrapOptions }}
+      focusTrapOptions={{
+        escapeDeactivates: false,
+        allowOutsideClick: true,
+        ...focusTrapOptions,
+      }}
     >
       <div
         role="dialog"
         className={classnames(
-          "bg-white rounded-lg overflow-hidden shadow-lg w-120 max-w-dvw z-60 fixed",
+          "bg-white rounded-lg overflow-hidden shadow-lg w-120 max-w-dvw fixed",
           className
         )}
         {...bodyProps}

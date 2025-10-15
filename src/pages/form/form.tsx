@@ -2,19 +2,20 @@ import { faker } from "@faker-js/faker";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../../components/button";
 import { Dialog } from "../../components/dialog";
+import { Dropzone } from "../../components/dropzone";
 import { Field } from "../../components/field";
-import { Error } from "../../components/field/error";
 import { Select } from "../../components/select";
 import { TextArea } from "../../components/textarea";
+import { useToastController } from "../../components/toaster/controller";
+import { Toaster } from "../../components/toaster/toaster";
 import { Toggle } from "../../components/toggle";
 import { useFiltered } from "../../hooks/use-filtered";
-import type { FileWithPath } from "react-dropzone";
-import { Dropzone } from "../../components/dropzone";
+import { useClickOutside } from "../../hooks/use-click-outside";
 
 const songs = Array.from({ length: 20 }).map(() => ({
   id: faker.string.uuid(),
@@ -59,6 +60,7 @@ const savePayload = async <T,>(payload: T) => {
 };
 
 export const FormPage = () => {
+  const { emit } = useToastController();
   const [songOptions, runFilter] = useFiltered(songs);
   const [fruitOptions, runFruitFilter, { isPending }] = useFiltered(
     [] as string[],
@@ -94,12 +96,17 @@ export const FormPage = () => {
     setIsExpanded(false);
   }, [reset]);
 
+  const handleValidationError = useCallback(() => {
+    emit({ message: "Validation error" });
+  }, [emit]);
+
   const onSubmit = useCallback(
     async (data: z.infer<typeof schema>) => {
       await savePayload(data);
+      emit({ message: "Saved succesfully", title: "Success" });
       handleClose();
     },
-    [handleClose]
+    [handleClose, emit]
   );
 
   return (
@@ -237,12 +244,13 @@ export const FormPage = () => {
           <Button
             isPending={isSubmitting}
             theme="primary"
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(onSubmit, handleValidationError)}
           >
             Save
           </Button>
         </Dialog.Footer>
       </Dialog>
+      <Toaster />
     </>
   );
 };

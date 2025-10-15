@@ -38,6 +38,7 @@ const PopperComponent = <T extends HTMLElement | null>(
         zIndex,
         ...style,
       }}
+      onClick={() => console.log("clicked popper")}
       className={classnames("fixed", className)}
     >
       {children}

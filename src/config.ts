@@ -17,4 +17,5 @@ export const POPPER_DEPTH = {
   TOOLTIP: 1100,
   DROPDOWN: 1200,
   DIALOG: 1300,
+  TOASTER: 1400
 };

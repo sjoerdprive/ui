@@ -99,7 +99,6 @@ export const useSelect = <T,>({
   }, [selectedValue, renderValueContent, placeholder]);
 
   const cachedOptions = useMemo(() => {
-    console.log({ optionsCache });
     return Array.from(optionsCache.values());
   }, [optionsCache]);
 
