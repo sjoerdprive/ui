@@ -1,3 +1,4 @@
+"use client";
 import { useMemo, type ComponentProps, type ReactNode } from "react";
 import { Popper } from "../popper";
 import { Backdrop } from "./backdrop";
@@ -8,7 +9,7 @@ import { Header } from "./header";
 import { Title } from "./title";
 import { POPPER_DEPTH } from "../../config";
 
-interface DialogProps<T extends HTMLElement | null>
+export interface DialogProps<T extends HTMLElement | null>
   extends Omit<ComponentProps<typeof Popper<T>>, "title"> {
   onClose?: () => void;
   title?: ReactNode;

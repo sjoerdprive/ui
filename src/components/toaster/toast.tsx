@@ -1,13 +1,14 @@
+"use client";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { themeClassVariants } from "../../class-variants";
 import { useIsMounted } from "../../hooks/use-is-mounted";
 import { classnames } from "../../utils";
 import { Button } from "../button";
 import { Typography } from "../typography";
-import type { ToastProps as BaseToastProps } from "./types";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import type { ToastProps } from "./types";
 
-interface ToastProps extends BaseToastProps {
+export interface ToastComponentProps extends ToastProps {
   onRemove?: (id: string) => void;
 }
 
@@ -18,7 +19,7 @@ export const Toast = ({
   className,
   onRemove,
   ...divProps
-}: ToastProps) => {
+}: ToastComponentProps) => {
   const isMounted = useIsMounted();
 
   return (
@@ -36,7 +37,11 @@ export const Toast = ({
       {...divProps}
     >
       <div className="flex flex-col gap-1">
-        {title && <Typography size="h4" className="my-1" >{title}</Typography>}
+        {title && (
+          <Typography size="h4" className="my-1">
+            {title}
+          </Typography>
+        )}
         {message}
       </div>
       <Button

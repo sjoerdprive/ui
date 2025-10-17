@@ -1,3 +1,4 @@
+"use client";
 import {
   forwardRef,
   useMemo,
@@ -12,7 +13,7 @@ import { POPPER_DEPTH } from "../../config";
 
 const windowMargin = 32;
 
-interface DropdownProps extends ComponentProps<"div">, PopperProps {
+export interface DropdownProps extends ComponentProps<"div">, PopperProps {
   zIndex?: number;
 }
 

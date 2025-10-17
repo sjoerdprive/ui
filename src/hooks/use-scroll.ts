@@ -1,3 +1,4 @@
+"use client";
 import { useLayoutEffect } from "react";
 
 export function useScroll(callback: () => void) {

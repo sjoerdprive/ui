@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../../components/button";
@@ -15,7 +15,6 @@ import { useToastController } from "../../components/toaster/controller";
 import { Toaster } from "../../components/toaster/toaster";
 import { Toggle } from "../../components/toggle";
 import { useFiltered } from "../../hooks/use-filtered";
-import { useClickOutside } from "../../hooks/use-click-outside";
 
 const songs = Array.from({ length: 20 }).map(() => ({
   id: faker.string.uuid(),

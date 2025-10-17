@@ -1,12 +1,14 @@
+"use client";
 import { useId, useLayoutEffect, useState, type ComponentProps } from "react";
 import { useIsMounted } from "../../hooks/use-is-mounted";
 import { Popper } from "../popper";
 import { Content } from "./content";
 import { POPPER_DEPTH } from "../../config";
 
-interface TooltipProps extends ComponentProps<typeof Popper> {}
-
-export const Tooltip = ({ children, anchor }: TooltipProps) => {
+export const Tooltip = ({
+  children,
+  anchor,
+}: ComponentProps<typeof Popper>) => {
   const isMounted = useIsMounted();
   const [isVisible, setIsVisible] = useState(false);
   const id = useId();

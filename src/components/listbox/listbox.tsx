@@ -1,3 +1,4 @@
+"use client";
 import {
   forwardRef,
   useCallback,
@@ -11,12 +12,12 @@ import { useListbox } from "./use-listbox";
 import { useCombinedRefs } from "../../hooks/use-combined-refs";
 import { useKey } from "../../hooks/use-key";
 
-interface ChildProps {
+export interface ChildProps {
   isFocused: (index: number) => boolean;
   getId: (index: number) => string;
 }
 
-interface ListboxProps<T> extends Omit<ComponentProps<"ul">, "children"> {
+export interface ListboxProps<T> extends Omit<ComponentProps<"ul">, "children"> {
   options?: T[];
   children: (props: ChildProps) => React.ReactNode;
 }

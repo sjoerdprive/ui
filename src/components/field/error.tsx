@@ -1,3 +1,4 @@
+"use client";
 import { useRef, type ComponentProps } from "react";
 import { classnames } from "../../utils";
 import { Tooltip } from "../tooltip";

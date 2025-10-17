@@ -1,3 +1,4 @@
+"use client";
 import {
   forwardRef,
   useCallback,
@@ -11,7 +12,7 @@ import { classnames } from "../../utils";
 import { inputClassVariants, type InputStyles } from "../input";
 import { Preview } from "./file-preview";
 
-interface DropzoneProps
+export interface DropzoneProps
   extends Omit<
       ComponentProps<"input">,
       "height" | "placeholder" | "onChange" | "value" | "accept"

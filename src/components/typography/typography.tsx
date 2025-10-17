@@ -1,8 +1,9 @@
+"use client";
 import { createElement, type ComponentProps } from "react";
 import { typographyOptions, type TypographyOption } from "./types";
 import { typographyClassVariants } from "./class-variants";
 
-interface TypographyProps extends Omit<ComponentProps<"p">, "as"> {
+export interface TypographyProps extends Omit<ComponentProps<"p">, "as"> {
   as?: TypographyOption;
   size?: TypographyOption;
 }

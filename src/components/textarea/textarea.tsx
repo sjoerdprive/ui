@@ -1,3 +1,4 @@
+"use client";
 import {
   forwardRef,
   useEffect,
@@ -9,7 +10,7 @@ import { type InputStyles } from "../input";
 import { textAreaClassVariants } from "./class-variants";
 import { useCombinedRefs } from "../../hooks/use-combined-refs";
 
-interface TextAreaProps extends ComponentProps<"textarea">, InputStyles {
+export interface TextAreaProps extends ComponentProps<"textarea">, InputStyles {
   autosize?: boolean;
   maxHeight?: number;
 }

@@ -1,3 +1,4 @@
+"use client";
 import { FocusTrap, type FocusTrapProps } from "focus-trap-react";
 import type { ComponentPropsWithoutRef } from "react";
 import { classnames } from "../../utils";

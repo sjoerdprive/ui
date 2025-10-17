@@ -1,8 +1,9 @@
+"use client";
 import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import type { ButtonStyles } from "../button/types";
 import { pillClassVariants } from "./class-variants";
 
-interface PillProps extends ComponentProps<"span">, ButtonStyles {}
+export interface PillProps extends ComponentProps<"span">, ButtonStyles {}
 
 export const Pill = forwardRef(
   (

@@ -15,7 +15,7 @@ const meta = {
 export const Default: Story = {};
 
 export const AsPrefab: Story = {
-  render: (args) => {
+  render: () => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -37,7 +37,7 @@ export const AsPrefab: Story = {
 };
 
 export const WithFooter: Story = {
-  render: (args) => {
+  render: () => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -65,7 +65,7 @@ export const WithFooter: Story = {
 };
 
 export const Composed: Story = {
-  render: (args) => {
+  render: () => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (

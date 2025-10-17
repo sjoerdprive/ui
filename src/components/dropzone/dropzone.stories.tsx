@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Dropzone } from "./dropzone";
-import { useForm } from "react-hook-form";
 import type { FileWithPath } from "react-dropzone";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Dropzone } from "./dropzone";
 
 type Story = StoryObj<typeof Dropzone>;
 

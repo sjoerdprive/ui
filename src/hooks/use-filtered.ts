@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useState } from "react";
 import { comboboxFilterDefault } from "../components/select/utils";
 import { useDebounce } from "./use-debounce";

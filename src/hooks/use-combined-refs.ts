@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef } from "react";
 
 export function useCombinedRefs<T>(...refs: (React.Ref<T> | undefined)[]) {

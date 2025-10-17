@@ -1,3 +1,4 @@
+"use client";
 import { useRef, useCallback, useEffect } from "react";
 
 const DEFAULT_DELAY = 300;

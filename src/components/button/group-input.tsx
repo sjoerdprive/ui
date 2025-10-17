@@ -1,3 +1,4 @@
+"use client";
 import {
   forwardRef,
   type ComponentProps,
@@ -9,7 +10,7 @@ import { buttonClassVariants } from "./class-variants";
 import { classnames } from "../../utils";
 import { twMerge } from "tailwind-merge";
 
-interface GroupInputProps
+export interface GroupInputProps
   extends Omit<ComponentProps<"input">, "height">,
     ButtonStyles {
   children?: ReactNode;

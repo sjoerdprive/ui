@@ -1,3 +1,4 @@
+"use client";
 import type { ComponentProps } from "react";
 import { classnames } from "../../utils";
 import { useIsMounted } from "../../hooks/use-is-mounted";

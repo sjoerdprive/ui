@@ -14,7 +14,7 @@ const meta = {
 } satisfies Meta<typeof Tooltip>;
 
 export const Default: Story = {
-  render: (args) => {
+  render: () => {
     const ref = useRef(null);
 
     return (
@@ -27,7 +27,7 @@ export const Default: Story = {
 };
 
 export const CustomContent: Story = {
-  render: (args) => {
+  render: () => {
     const ref = useRef(null);
 
     return (

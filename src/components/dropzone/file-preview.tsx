@@ -1,3 +1,4 @@
+"use client";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, type ComponentProps } from "react";
@@ -5,7 +6,7 @@ import type { FileWithPath } from "react-dropzone";
 import { Button } from "../button";
 import { Tooltip } from "../tooltip";
 
-interface FilePreviewProps extends ComponentProps<typeof Button> {
+export interface FilePreviewProps extends ComponentProps<typeof Button> {
   file: FileWithPath;
 }
 

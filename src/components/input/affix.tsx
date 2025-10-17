@@ -1,7 +1,8 @@
+"use client";
 import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import { classnames } from "../../utils";
 
-interface AffixProps extends ComponentProps<"span"> {
+export interface AffixProps extends ComponentProps<"span"> {
   before?: boolean;
   after?: boolean;
 }

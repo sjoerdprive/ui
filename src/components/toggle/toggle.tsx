@@ -1,3 +1,4 @@
+"use client";
 import {
   forwardRef,
   type ComponentProps,
@@ -9,7 +10,7 @@ import type { WithHeight, WithTheme } from "../../config";
 import { classnames } from "../../utils";
 import { toggleClassVariants } from "./class-variants";
 
-interface ToggleProps
+export interface ToggleProps
   extends Omit<ComponentProps<"input">, "height">,
     WithTheme,
     WithHeight {

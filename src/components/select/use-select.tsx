@@ -1,7 +1,8 @@
+"use client";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Placeholder } from "./placeholder";
 
-interface UseSelectParameters<T> {
+export interface UseSelectParameters<T> {
   options: T[];
   value?: string | number | (string | number)[] | null;
   identifier?: (value: T) => string;

@@ -1,3 +1,4 @@
+"use client";
 import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import { classnames } from "../../utils";
 

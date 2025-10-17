@@ -1,7 +1,8 @@
+"use client";
 import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import { classnames } from "../../utils";
 
-interface OptionComponentProps extends ComponentProps<"input"> {
+export interface OptionComponentProps extends ComponentProps<"input"> {
   children?: React.ReactNode;
   hasFocus?: boolean;
 }

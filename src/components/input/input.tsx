@@ -1,9 +1,10 @@
+"use client";
 import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import { inputClassVariants } from "./class-variants";
 import type { InputStyles } from "./types";
 import { twMerge } from "tailwind-merge";
 
-interface InputProps
+export interface InputProps
   extends Omit<ComponentProps<"input">, "height">,
     InputStyles {}
 

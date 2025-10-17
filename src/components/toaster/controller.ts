@@ -1,3 +1,4 @@
+"use client";
 import type { ToastProps } from "./types";
 
 // lib/eventEmitter.ts

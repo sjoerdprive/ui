@@ -1,3 +1,4 @@
+"use client";
 import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
 import { createPortal } from "react-dom";
 import { classnames } from "../../utils";
@@ -6,10 +7,11 @@ import { POPPER_DEPTH } from "../../config";
 
 const offset = 4;
 
-interface PopperProps<T extends HTMLElement | null>
+export interface PopperProps<T extends HTMLElement | null>
   extends ComponentProps<"div">,
     ExtraPopperProps<T> {
   zIndex?: number;
+  attachToAnchorParent?: boolean;
 }
 
 const PopperComponent = <T extends HTMLElement | null>(
@@ -20,11 +22,26 @@ const PopperComponent = <T extends HTMLElement | null>(
     isVisible,
     style,
     zIndex = POPPER_DEPTH.BASE,
+    attachToAnchorParent,
     ...divProps
   }: PopperProps<T>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const rect = anchor?.current?.getBoundingClientRect();
+
+  const maxLeft = window.innerWidth - (rect?.width ?? 0) - offset;
+  const maxTop = window.innerHeight - (rect?.height ?? 0) - offset;
+
+  const left = Math.min(Math.max(rect?.x ?? 0, offset), maxLeft);
+  const top = Math.min(
+    Math.max((rect?.y ?? 0) + (rect?.height ?? 0), offset),
+    maxTop
+  );
+
+  const root =
+    attachToAnchorParent && anchor?.current?.parentElement
+      ? anchor?.current?.parentElement
+      : document.body;
 
   if (!isVisible) return null;
 
@@ -33,8 +50,8 @@ const PopperComponent = <T extends HTMLElement | null>(
       {...divProps}
       ref={ref}
       style={{
-        left: rect?.x ?? 0,
-        top: (rect?.y ?? 0) + (rect?.height ?? 0) + offset,
+        left,
+        top,
         zIndex,
         ...style,
       }}
@@ -43,7 +60,7 @@ const PopperComponent = <T extends HTMLElement | null>(
     >
       {children}
     </div>,
-    anchor?.current?.parentElement ?? document.body
+    root
   );
 };
 

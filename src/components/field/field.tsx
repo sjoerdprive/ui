@@ -1,3 +1,4 @@
+"use client";
 import {
   forwardRef,
   useId,
@@ -11,7 +12,7 @@ import { Input } from "../input";
 import { Error } from "./error";
 import { Label } from "./label";
 
-interface FieldProps extends ComponentProps<typeof Input> {
+export interface FieldProps extends ComponentProps<typeof Input> {
   label?: ReactNode;
   error?: string;
   inputId?: string;
