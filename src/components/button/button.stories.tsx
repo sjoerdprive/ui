@@ -23,7 +23,6 @@ const meta = {
   args: {
     height: "md",
     disabled: false,
-    theme: "primary",
     children: "Button",
   },
 } satisfies Meta<typeof Button>;

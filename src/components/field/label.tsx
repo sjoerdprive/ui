@@ -8,7 +8,7 @@ export const Label = ({
   ...labelProps
 }: ComponentProps<"label">) => {
   return (
-    <label className={classnames("font-medium", className)} {...labelProps}>
+    <label className={classnames("font-semibold text-sm", className)} {...labelProps}>
       {children}
     </label>
   );

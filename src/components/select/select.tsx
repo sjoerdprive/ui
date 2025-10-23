@@ -132,7 +132,10 @@ const SelectComponent = <T,>(
         ref={buttonRef}
         {...buttonProps}
       >
-        <div tabIndex={-1} className="grow overflow-x-auto scrollbar-hide flex flex-nowrap whitespace-nowrap">
+        <div
+          tabIndex={-1}
+          className="grow overflow-x-auto scrollbar-hide flex flex-nowrap whitespace-nowrap"
+        >
           {renderedValueContent}
         </div>
         <FontAwesomeIcon
@@ -145,8 +148,8 @@ const SelectComponent = <T,>(
         isVisible={showOptions}
         anchor={buttonRef}
         ref={dropdownRef}
-        zIndex={120}
-        className="flex flex-col"
+        className="flex flex-col my-1"
+        attachToAnchorParent
       >
         {onQuery && (
           <div className="px-3 py-3 border-b border-gray-200 flex flex-col bg-white">

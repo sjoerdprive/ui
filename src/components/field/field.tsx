@@ -40,7 +40,7 @@ export const Field = forwardRef(
         className={classnames("flex flex-col justify-end relative", className)}
       >
         {(label || error) && (
-          <div className="flex items-center mb-1">
+          <div className="flex items-center mb-0.5">
             {renderedLabel}
             <Error
               id={errorId}

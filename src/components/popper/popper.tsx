@@ -11,7 +11,6 @@ export interface PopperProps<T extends HTMLElement | null>
   extends ComponentProps<"div">,
     ExtraPopperProps<T> {
   zIndex?: number;
-  attachToAnchorParent?: boolean;
 }
 
 const PopperComponent = <T extends HTMLElement | null>(
@@ -29,8 +28,8 @@ const PopperComponent = <T extends HTMLElement | null>(
 ) => {
   const rect = anchor?.current?.getBoundingClientRect();
 
-  const maxLeft = window.innerWidth - (rect?.width ?? 0) - offset;
-  const maxTop = window.innerHeight - (rect?.height ?? 0) - offset;
+  const maxLeft = (window?.innerWidth ?? 0) - (rect?.width ?? 0) - offset;
+  const maxTop = (window?.innerHeight ?? 0) - (rect?.height ?? 0) - offset;
 
   const left = Math.min(Math.max(rect?.x ?? 0, offset), maxLeft);
   const top = Math.min(
@@ -41,7 +40,7 @@ const PopperComponent = <T extends HTMLElement | null>(
   const root =
     attachToAnchorParent && anchor?.current?.parentElement
       ? anchor?.current?.parentElement
-      : document.body;
+      : document?.body;
 
   if (!isVisible) return null;
 

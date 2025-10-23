@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { comboboxFilterDefault } from "../components/select/utils";
 import { useDebounce } from "./use-debounce";
 
@@ -58,6 +58,10 @@ export const useFiltered = <T, R extends string>(
   );
 
   const [filter] = useDebounce(executeFilter, debounce);
+
+  useEffect(() => {
+    setResults(items);
+  }, [items]);
 
   return [results, filter, status] as const;
 };

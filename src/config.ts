@@ -15,7 +15,7 @@ export interface WithTheme {
 export const POPPER_DEPTH = {
   BASE: 1000,
   TOOLTIP: 1100,
-  DROPDOWN: 1200,
-  DIALOG: 1300,
+  DIALOG: 1200,
+  DROPDOWN: 1300,
   TOASTER: 1400
 };

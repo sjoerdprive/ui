@@ -1,7 +1,7 @@
 {
   "name": "sjoerd-ui",
   "private": false,
-  "version": "0.0.10",
+  "version": "1.0.6",
   "type": "module",
   "main": "dist/sjoerd-ui.js",
   "module": "dist/index.js",

@@ -1,6 +1,7 @@
 "use client";
 import type { ComponentProps } from "react";
 import { classnames } from "../../utils";
+import { Typography } from "../typography";
 
 export const Title = ({
   children,
@@ -8,11 +9,12 @@ export const Title = ({
   ...h2Props
 }: ComponentProps<"h2">) => {
   return (
-    <h2
+    <Typography
+      as="h2"
       className={classnames("font-semibold flex-grow truncate", className)}
       {...h2Props}
     >
       {children}
-    </h2>
+    </Typography>
   );
 };
