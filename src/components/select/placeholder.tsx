@@ -1,12 +1,9 @@
 "use client";
-import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
+import { forwardRef, type ComponentProps } from "react";
 import { classnames } from "../../utils";
 
-export const Placeholder = forwardRef(
-  (
-    { children, className, ...spanProps }: ComponentProps<"span">,
-    ref: ForwardedRef<HTMLSpanElement>
-  ) => {
+export const Placeholder = forwardRef<HTMLSpanElement, ComponentProps<"span">>(
+  ({ children, className, ...spanProps }, ref) => {
     return (
       <span
         ref={ref}

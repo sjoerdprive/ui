@@ -26,7 +26,7 @@ export interface DropzoneProps
   multiple?: boolean;
 }
 
-export const Dropzone = forwardRef(
+export const Dropzone = forwardRef<HTMLInputElement, DropzoneProps>(
   ({
     className,
     onChange,

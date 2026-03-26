@@ -4,7 +4,6 @@ import {
   useEffect,
   useRef,
   type ComponentProps,
-  type ForwardedRef,
 } from "react";
 import { type InputStyles } from "../input";
 import { textAreaClassVariants } from "./class-variants";
@@ -15,7 +14,7 @@ export interface TextAreaProps extends ComponentProps<"textarea">, InputStyles {
   maxHeight?: number;
 }
 
-export const TextArea = forwardRef(
+export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
     {
       className,
@@ -24,8 +23,8 @@ export const TextArea = forwardRef(
       maxHeight = 300,
       style,
       ...textareaProps
-    }: TextAreaProps,
-    ref: ForwardedRef<HTMLTextAreaElement>
+    },
+    ref
   ) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const combinedRef = useCombinedRefs(ref, textareaRef);

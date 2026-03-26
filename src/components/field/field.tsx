@@ -4,7 +4,6 @@ import {
   useId,
   useMemo,
   type ComponentProps,
-  type ForwardedRef,
   type ReactNode,
 } from "react";
 import { classnames } from "../../utils";
@@ -18,11 +17,8 @@ export interface FieldProps extends ComponentProps<typeof Input> {
   inputId?: string;
 }
 
-export const Field = forwardRef(
-  (
-    { className, children, label, error, inputId, ...inputProps }: FieldProps,
-    ref: ForwardedRef<HTMLInputElement>
-  ) => {
+export const Field = forwardRef<HTMLInputElement, FieldProps>(
+  ({ className, children, label, error, inputId, ...inputProps }, ref) => {
     const errorId = useId();
     const renderedLabel = useMemo(() => {
       return typeof label === "string" ? (

@@ -3,7 +3,6 @@ import {
   forwardRef,
   useMemo,
   type ComponentProps,
-  type ForwardedRef,
 } from "react";
 import { Popper } from "../popper";
 import type { PopperProps } from "../popper/types";
@@ -17,7 +16,7 @@ export interface DropdownProps extends ComponentProps<"div">, PopperProps {
   zIndex?: number;
 }
 
-export const Dropdown = forwardRef(
+export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
   (
     {
       className,
@@ -26,8 +25,8 @@ export const Dropdown = forwardRef(
       children,
       zIndex = POPPER_DEPTH.DROPDOWN,
       ...divProps
-    }: DropdownProps,
-    ref: ForwardedRef<HTMLDivElement>
+    },
+    ref
   ) => {
     const width = useWidth(anchor);
     const rect = anchor?.current?.getBoundingClientRect();

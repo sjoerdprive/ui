@@ -1,14 +1,11 @@
 "use client";
-import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
+import { forwardRef, type ComponentProps } from "react";
 import { classnames } from "../../utils";
 
 export interface ButtonGroupProps extends ComponentProps<"div"> {}
 
-export const Group = forwardRef(
-  (
-    { className, children, ...divProps }: ButtonGroupProps,
-    ref: ForwardedRef<HTMLDivElement>
-  ) => {
+export const Group = forwardRef<HTMLDivElement, ButtonGroupProps>(
+  ({ className, children, ...divProps }, ref) => {
     return (
       <div
         role="group"

@@ -2,7 +2,6 @@
 import {
   forwardRef,
   type ComponentProps,
-  type ForwardedRef,
   type ReactNode,
 } from "react";
 import { heightClassVariants } from "../../class-variants/height";
@@ -17,11 +16,8 @@ export interface ToggleProps
   label?: ReactNode;
 }
 
-export const Toggle = forwardRef(
-  (
-    { className, height, theme, label, ...inputProps }: ToggleProps,
-    ref: ForwardedRef<HTMLInputElement>
-  ) => {
+export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
+  ({ className, height, theme, label, ...inputProps }, ref) => {
     return (
       <label
         className={heightClassVariants({

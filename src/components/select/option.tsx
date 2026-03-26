@@ -1,5 +1,5 @@
 "use client";
-import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
+import { forwardRef, type ComponentProps } from "react";
 import { classnames } from "../../utils";
 
 export interface OptionComponentProps extends ComponentProps<"input"> {
@@ -7,7 +7,7 @@ export interface OptionComponentProps extends ComponentProps<"input"> {
   hasFocus?: boolean;
 }
 
-export const Option = forwardRef(
+export const Option = forwardRef<HTMLInputElement, OptionComponentProps>(
   (
     {
       multiple,
@@ -16,8 +16,8 @@ export const Option = forwardRef(
       hasFocus,
       id,
       ...inputProps
-    }: OptionComponentProps,
-    ref: ForwardedRef<HTMLInputElement>
+    },
+    ref
   ) => {
     return (
       <label

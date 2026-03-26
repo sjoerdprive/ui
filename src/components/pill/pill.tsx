@@ -1,11 +1,11 @@
 "use client";
-import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
+import { forwardRef, type ComponentProps } from "react";
 import type { ButtonStyles } from "../button/types";
 import { pillClassVariants } from "./class-variants";
 
 export interface PillProps extends ComponentProps<"span">, ButtonStyles {}
 
-export const Pill = forwardRef(
+export const Pill = forwardRef<HTMLSpanElement, PillProps>(
   (
     {
       children,
@@ -15,8 +15,8 @@ export const Pill = forwardRef(
       square,
       variant,
       ...spanProps
-    }: PillProps,
-    ref: ForwardedRef<HTMLSpanElement>
+    },
+    ref
   ) => {
     return (
       <span

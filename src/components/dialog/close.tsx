@@ -5,21 +5,20 @@ import {
   forwardRef,
   useRef,
   type ComponentProps,
-  type ForwardedRef,
 } from "react";
 import { useCombinedRefs } from "../../hooks/use-combined-refs";
 import { useKey } from "../../hooks/use-key";
 import { Button } from "../button";
 
-export const Close = forwardRef(
+export const Close = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>>(
   (
     {
       className,
       children,
       onClick,
       ...buttonProps
-    }: ComponentProps<typeof Button>,
-    ref: ForwardedRef<HTMLButtonElement>
+    },
+    ref
   ) => {
     const button = useRef<HTMLButtonElement>(null);
     const combinedRef = useCombinedRefs(ref, button);

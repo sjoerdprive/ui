@@ -1,5 +1,5 @@
 "use client";
-import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
+import { forwardRef, type ComponentProps } from "react";
 import { classnames } from "../../utils";
 
 export interface AffixProps extends ComponentProps<"span"> {
@@ -7,11 +7,8 @@ export interface AffixProps extends ComponentProps<"span"> {
   after?: boolean;
 }
 
-export const Affix = forwardRef(
-  (
-    { children, className, before, after, ...spanProps }: AffixProps,
-    ref: ForwardedRef<HTMLSpanElement>
-  ) => {
+export const Affix = forwardRef<HTMLSpanElement, AffixProps>(
+  ({ children, className, before, after, ...spanProps }, ref) => {
     return (
       <span
         ref={ref}

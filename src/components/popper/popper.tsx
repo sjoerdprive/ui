@@ -26,6 +26,7 @@ const PopperComponent = <T extends HTMLElement | null>(
   }: PopperProps<T>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
+  if (typeof window === "undefined") return null;
   const rect = anchor?.current?.getBoundingClientRect();
 
   const maxLeft = (window?.innerWidth ?? 0) - (rect?.width ?? 0) - offset;

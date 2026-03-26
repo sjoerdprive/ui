@@ -1,22 +1,16 @@
 "use client";
-import {
-  forwardRef,
-  type ComponentProps,
-  type ForwardedRef,
-  type ReactNode,
-} from "react";
-import type { ButtonStyles } from "./types";
-import { buttonClassVariants } from "./class-variants";
-import { classnames } from "../../utils";
+import { forwardRef, type ComponentProps, type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import { classnames } from "../../utils";
+import { buttonClassVariants } from "./class-variants";
+import type { ButtonStyles } from "./types";
 
 export interface GroupInputProps
-  extends Omit<ComponentProps<"input">, "height">,
-    ButtonStyles {
+  extends Omit<ComponentProps<"input">, "height">, ButtonStyles {
   children?: ReactNode;
 }
 
-export const Input = forwardRef(
+export const Input = forwardRef<HTMLInputElement, GroupInputProps>(
   (
     {
       className,
@@ -27,8 +21,8 @@ export const Input = forwardRef(
       square,
       variant,
       ...inputProps
-    }: GroupInputProps,
-    ref: ForwardedRef<HTMLInputElement>
+    },
+    ref,
   ) => {
     return (
       <label
@@ -40,9 +34,9 @@ export const Input = forwardRef(
             square,
             className: classnames(
               "flex items-center justify-center",
-              className
+              className,
             ),
-          })
+          }),
         )}
       >
         {children}
@@ -54,5 +48,5 @@ export const Input = forwardRef(
         />
       </label>
     );
-  }
+  },
 );

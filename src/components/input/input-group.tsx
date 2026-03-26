@@ -1,5 +1,5 @@
 "use client";
-import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
+import { forwardRef, type ComponentProps } from "react";
 import { inputClassVariants } from "./class-variants";
 import type { InputStyles } from "./types";
 import { classnames } from "../../utils";
@@ -7,11 +7,8 @@ import { twMerge } from "tailwind-merge";
 
 export interface InputGroupProps extends ComponentProps<"label">, InputStyles {}
 
-export const Group = forwardRef(
-  (
-    { children, className, height, ...inputProps }: InputGroupProps,
-    ref: ForwardedRef<HTMLLabelElement>
-  ) => {
+export const Group = forwardRef<HTMLLabelElement, InputGroupProps>(
+  ({ children, className, height, ...inputProps }, ref) => {
     return (
       <label
         ref={ref}
