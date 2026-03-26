@@ -1,10 +1,10 @@
 {
   "name": "sjoerd-ui",
   "private": false,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "type": "module",
   "main": "dist/sjoerd-ui.js",
-  "module": "dist/index.js",
+  "module": "dist/sjoerd-ui.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
