@@ -1,8 +1,8 @@
 "use client";
 import {
-  forwardRef,
   type ComponentProps,
   type ReactNode,
+  type Ref,
 } from "react";
 import { heightClassVariants } from "../../class-variants/height";
 import type { WithHeight, WithTheme } from "../../config";
@@ -14,33 +14,32 @@ export interface ToggleProps
     WithTheme,
     WithHeight {
   label?: ReactNode;
+  ref?: Ref<HTMLInputElement>;
 }
 
-export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
-  ({ className, height, theme, label, ...inputProps }, ref) => {
-    return (
-      <label
-        className={heightClassVariants({
+export const Toggle = ({ className, height, theme, label, ref, ...inputProps }: ToggleProps) => {
+  return (
+    <label
+      className={heightClassVariants({
+        height,
+        className: classnames("flex items-center cursor-pointer gap-2", className),
+      })}
+    >
+      <div
+        className={toggleClassVariants({
           height,
-          className: classnames("flex items-center cursor-pointer gap-2", className),
+          theme,
         })}
       >
-        <div
-          className={toggleClassVariants({
-            height,
-            theme,
-          })}
-        >
-          <input
-            type="checkbox"
-            className="sr-only peer"
-            ref={ref}
-            {...inputProps}
-          />
-          <div className="absolute left-0.5 top-0.5 bottom-0.5 w-auto bg-white aspect-square rounded-full transition peer-checked:translate-x-[calc(100%)]"></div>
-        </div>
-        {label}
-      </label>
-    );
-  }
-);
+        <input
+          type="checkbox"
+          className="sr-only peer"
+          ref={ref}
+          {...inputProps}
+        />
+        <div className="absolute left-0.5 top-0.5 bottom-0.5 w-auto bg-white aspect-square rounded-full transition peer-checked:translate-x-[calc(100%)]"></div>
+      </div>
+      {label}
+    </label>
+  );
+};

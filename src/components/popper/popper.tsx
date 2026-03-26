@@ -1,5 +1,5 @@
 "use client";
-import { forwardRef, type ComponentProps, type ForwardedRef } from "react";
+import { type ComponentProps, type Ref } from "react";
 import { createPortal } from "react-dom";
 import { classnames } from "../../utils";
 import type { PopperProps as ExtraPopperProps } from "./types";
@@ -11,21 +11,20 @@ export interface PopperProps<T extends HTMLElement | null>
   extends ComponentProps<"div">,
     ExtraPopperProps<T> {
   zIndex?: number;
+  ref?: Ref<HTMLDivElement>;
 }
 
-const PopperComponent = <T extends HTMLElement | null>(
-  {
-    children,
-    anchor,
-    className,
-    isVisible,
-    style,
-    zIndex = POPPER_DEPTH.BASE,
-    attachToAnchorParent,
-    ...divProps
-  }: PopperProps<T>,
-  ref: ForwardedRef<HTMLDivElement>
-) => {
+export const Popper = <T extends HTMLElement | null>({
+  children,
+  anchor,
+  className,
+  isVisible,
+  style,
+  zIndex = POPPER_DEPTH.BASE,
+  attachToAnchorParent,
+  ref,
+  ...divProps
+}: PopperProps<T>) => {
   if (typeof window === "undefined") return null;
   const rect = anchor?.current?.getBoundingClientRect();
 
@@ -63,9 +62,3 @@ const PopperComponent = <T extends HTMLElement | null>(
     root
   );
 };
-
-export const Popper = forwardRef(PopperComponent) as <
-  T extends HTMLElement | null
->(
-  props: PopperProps<T> & { ref?: React.Ref<HTMLDivElement> }
-) => React.ReactElement;

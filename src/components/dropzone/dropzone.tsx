@@ -1,6 +1,5 @@
 "use client";
 import {
-  forwardRef,
   useCallback,
   useMemo,
   type ComponentProps,
@@ -26,8 +25,7 @@ export interface DropzoneProps
   multiple?: boolean;
 }
 
-export const Dropzone = forwardRef<HTMLInputElement, DropzoneProps>(
-  ({
+export const Dropzone = ({
     className,
     onChange,
     height,
@@ -104,5 +102,4 @@ export const Dropzone = forwardRef<HTMLInputElement, DropzoneProps>(
         {preview}
       </div>
     );
-  }
-);
+};

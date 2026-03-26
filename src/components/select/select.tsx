@@ -2,14 +2,13 @@
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  forwardRef,
   useCallback,
   useId,
   useMemo,
   useRef,
   useState,
   type ChangeEvent,
-  type ForwardedRef,
+  type Ref,
 } from "react";
 import { twMerge } from "tailwind-merge";
 import { useClickOutside } from "../../hooks/use-click-outside";
@@ -24,25 +23,23 @@ import { Option } from "./option";
 import type { SelectExtraProps } from "./types";
 import { useSelect } from "./use-select";
 
-const SelectComponent = <T,>(
-  {
-    height,
-    className,
-    options,
-    value,
-    multiple,
-    name,
-    placeholder,
-    isPending,
-    onQuery,
-    onChange,
-    identifier,
-    renderOption,
-    renderValue,
-    ...buttonProps
-  }: SelectExtraProps<T>,
-  ref: ForwardedRef<HTMLInputElement>
-) => {
+export const Select = <T,>({
+  height,
+  className,
+  options,
+  value,
+  multiple,
+  name,
+  placeholder,
+  isPending,
+  onQuery,
+  onChange,
+  identifier,
+  renderOption,
+  renderValue,
+  ref,
+  ...buttonProps
+}: SelectExtraProps<T> & { ref?: Ref<HTMLInputElement> }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const listboxRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -202,6 +199,3 @@ const SelectComponent = <T,>(
   );
 };
 
-export const Select = forwardRef(SelectComponent) as <T>(
-  props: SelectExtraProps<T> & { ref?: React.Ref<HTMLButtonElement> }
-) => React.ReactElement;
